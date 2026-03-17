@@ -1,6 +1,5 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { Play } from "lucide-react";
 import { Link } from "react-router-dom";
 import { getCurrentDancerOfMonth } from "@/lib/sanity/queries/dancers-of-month";
 import { urlFor } from "@/lib/sanity";
@@ -11,9 +10,25 @@ const HeroSection = () => {
   const y = useTransform(scrollY, [0, 300], [0, 100]);
   const opacity = useTransform(scrollY, [0, 300], [1, 0.3]);
   const [dom, setDom] = useState<SanityDancerOfTheMonth | null>(null);
+  const [mousePos, setMousePos] = useState({ x: 0.5, y: 0.5 });
+  const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     getCurrentDancerOfMonth().then(setDom).catch(() => {});
+  }, []);
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!sectionRef.current) return;
+      const rect = sectionRef.current.getBoundingClientRect();
+      setMousePos({
+        x: (e.clientX - rect.left) / rect.width,
+        y: (e.clientY - rect.top) / rect.height,
+      });
+    };
+    const el = sectionRef.current;
+    if (el) el.addEventListener("mousemove", handleMouseMove);
+    return () => { if (el) el.removeEventListener("mousemove", handleMouseMove); };
   }, []);
 
   const dancerName = dom?.artist
@@ -25,8 +40,8 @@ const HeroSection = () => {
     : null;
 
   return (
-    <section className="relative h-screen min-h-[600px] flex flex-col overflow-hidden bg-black w-full">
-      {/* Background — image when DOM has one, else animated gradient */}
+    <section ref={sectionRef} className="relative h-screen min-h-[600px] flex flex-col overflow-hidden bg-black w-full">
+      {/* Background — image when DOM has one, else mouse-reactive gradient */}
       <motion.div className="absolute inset-0" style={{ y, opacity }}>
         {heroImageUrl ? (
           <img
@@ -36,52 +51,75 @@ const HeroSection = () => {
           />
         ) : (
           <div className="w-full h-full relative overflow-hidden">
-            {/* Animated gradient background */}
-            <motion.div
-              className="absolute inset-0"
+            {/* Base gradient */}
+            <div
+              className="absolute inset-0 transition-all duration-700 ease-out"
               style={{
-                background: "radial-gradient(ellipse at 30% 20%, #4a1a2e 0%, transparent 50%), radial-gradient(ellipse at 70% 80%, #2a1520 0%, transparent 50%), radial-gradient(ellipse at 50% 50%, #1a0a12 0%, #0a0406 100%)",
+                background: `
+                  radial-gradient(ellipse 80% 60% at ${mousePos.x * 100}% ${mousePos.y * 100}%, rgba(100, 30, 50, 0.4) 0%, transparent 60%),
+                  radial-gradient(ellipse 60% 80% at ${(1 - mousePos.x) * 100}% ${(1 - mousePos.y) * 100}%, rgba(60, 20, 40, 0.3) 0%, transparent 50%),
+                  radial-gradient(ellipse at 50% 50%, #0d0508 0%, #050203 100%)
+                `,
               }}
-              animate={{
-                backgroundPosition: ["0% 0%", "100% 100%", "0% 0%"],
-              }}
-              transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
             />
-            {/* Subtle floating light accents */}
+            {/* Mouse-following warm spotlight */}
+            <div
+              className="absolute w-[800px] h-[800px] rounded-full transition-all duration-500 ease-out pointer-events-none"
+              style={{
+                background: "radial-gradient(circle, rgba(212, 165, 116, 0.08) 0%, rgba(139, 69, 87, 0.04) 40%, transparent 70%)",
+                left: `${mousePos.x * 100}%`,
+                top: `${mousePos.y * 100}%`,
+                transform: "translate(-50%, -50%)",
+              }}
+            />
+            {/* Slow-moving ambient orbs */}
             <motion.div
-              className="absolute w-[600px] h-[600px] rounded-full opacity-[0.07]"
+              className="absolute w-[500px] h-[500px] rounded-full opacity-[0.06] pointer-events-none"
               style={{
                 background: "radial-gradient(circle, #d4a574 0%, transparent 70%)",
-                top: "10%",
-                left: "20%",
+                top: "5%",
+                left: "10%",
               }}
               animate={{
-                x: [0, 80, -40, 0],
-                y: [0, -60, 40, 0],
-                scale: [1, 1.2, 0.9, 1],
+                x: [0, 120, -60, 0],
+                y: [0, -80, 60, 0],
+                scale: [1, 1.3, 0.8, 1],
               }}
-              transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
+              transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
             />
             <motion.div
-              className="absolute w-[500px] h-[500px] rounded-full opacity-[0.05]"
+              className="absolute w-[400px] h-[400px] rounded-full opacity-[0.05] pointer-events-none"
               style={{
                 background: "radial-gradient(circle, #8b4557 0%, transparent 70%)",
-                bottom: "10%",
-                right: "15%",
+                bottom: "15%",
+                right: "10%",
               }}
               animate={{
-                x: [0, -60, 50, 0],
-                y: [0, 50, -30, 0],
-                scale: [1, 0.8, 1.1, 1],
+                x: [0, -80, 60, 0],
+                y: [0, 60, -40, 0],
+                scale: [1, 0.7, 1.2, 1],
               }}
-              transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
+              transition={{ duration: 25, repeat: Infinity, ease: "easeInOut" }}
+            />
+            <motion.div
+              className="absolute w-[350px] h-[350px] rounded-full opacity-[0.04] pointer-events-none"
+              style={{
+                background: "radial-gradient(circle, #c9956b 0%, transparent 70%)",
+                top: "50%",
+                left: "60%",
+              }}
+              animate={{
+                x: [0, 50, -90, 0],
+                y: [0, -70, 30, 0],
+                scale: [1, 1.1, 0.9, 1],
+              }}
+              transition={{ duration: 17, repeat: Infinity, ease: "easeInOut" }}
             />
           </div>
         )}
 
         {/* Overlays for readability */}
-        <div className="absolute inset-0 bg-black/30" />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/60" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/50" />
       </motion.div>
 
       {/* Logo */}
@@ -111,7 +149,7 @@ const HeroSection = () => {
         </motion.div>
       </div>
 
-      {/* Dancer of the Month overlay or "Now Playing" fallback */}
+      {/* Dancer of the Month overlay */}
       <motion.div
         className="absolute bottom-16 sm:bottom-24 left-0 right-0 z-20 px-4 sm:px-8"
         initial={{ opacity: 0, y: 20 }}
@@ -139,21 +177,14 @@ const HeroSection = () => {
               </div>
             </div>
           ) : (
-            <div className="flex items-end justify-between">
-              <div>
-                <div className="flex items-center gap-2 mb-2">
-                  <Play className="w-4 h-4 text-primary fill-primary" />
-                  <span className="text-xs sm:text-sm uppercase tracking-widest text-white/70 font-medium">
-                    Now Playing
-                  </span>
-                </div>
-                <h2 className="text-lg sm:text-2xl md:text-3xl font-bold text-white mb-1 drop-shadow-lg">
-                  Caribbean Dance Culture
-                </h2>
-                <p className="text-sm sm:text-base text-white/70 drop-shadow-md">
-                  Movement, rhythm, and stories from the islands
-                </p>
-              </div>
+            <div className="flex items-center justify-center">
+              <motion.p
+                className="text-base sm:text-lg text-white/50 tracking-widest uppercase font-light"
+                animate={{ opacity: [0.3, 0.6, 0.3] }}
+                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+              >
+                Movement, rhythm, and stories from the islands
+              </motion.p>
             </div>
           )}
         </div>
