@@ -1,0 +1,947 @@
+/* DancerGirl Brand Typography - Dancing Script, Times New Roman, Playfair Display, Cambria */
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700&family=Open+Sans:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap');
+
+/* Tailwind directives */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom font imports */
+ 
+
+@font-face {
+  font-family: 'DarlingtonDemo';
+  src: url('/fonts/DarlingtonDemo.woff2') format('woff2'),
+       url('/fonts/DarlingtonDemo.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* React Calendar Custom Styling */
+.react-calendar {
+  width: 100%;
+  max-width: 100%;
+  background: transparent;
+  border: none;
+  font-family: 'Libre Franklin', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+.calendar-container {
+  overflow: hidden;
+  border-radius: 0.5rem;
+  position: relative;
+}
+
+.react-calendar__navigation {
+  display: flex;
+  margin-bottom: 1rem;
+}
+
+.react-calendar__navigation button {
+  min-width: 44px;
+  background: none;
+  border: none;
+  font-size: 1rem;
+  font-weight: 600;
+  color: hsl(var(--foreground));
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 0.375rem;
+  transition: all 0.2s;
+}
+
+.react-calendar__navigation button:hover {
+  background-color: hsl(var(--primary) / 0.1);
+  color: hsl(var(--foreground));
+  border: 1px solid hsl(var(--primary) / 0.3);
+}
+
+.react-calendar__navigation button:disabled {
+  background-color: transparent;
+  color: hsl(var(--muted-foreground));
+  cursor: not-allowed;
+}
+
+.react-calendar__month-view__weekdays {
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size: 0.75rem;
+  color: hsl(var(--muted-foreground));
+  margin-bottom: 0.75rem;
+  letter-spacing: 0.05em;
+}
+
+.react-calendar__month-view__weekdays__weekday {
+  padding: 0.5rem;
+}
+
+.react-calendar__month-view__days {
+  display: grid !important;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+}
+
+.react-calendar__tile {
+  max-width: 100%;
+  padding: 0.75rem 0.25rem;
+  background: none;
+  border: none;
+  text-align: center;
+  line-height: 1.2;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: hsl(var(--foreground));
+  cursor: pointer;
+  border-radius: 0.25rem;
+  transition: all 0.15s ease-in-out;
+  position: relative;
+  min-height: 2.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 1px;
+}
+
+.react-calendar__tile:hover {
+  background-color: hsl(var(--primary) / 0.15);
+  color: hsl(var(--foreground));
+  transform: scale(1.02);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  border: 1px solid hsl(var(--primary) / 0.4);
+}
+
+.react-calendar__tile:focus {
+  background-color: hsl(var(--primary) / 0.15);
+  color: hsl(var(--foreground));
+  outline: 2px solid hsl(var(--primary));
+  outline-offset: 2px;
+  border: 1px solid hsl(var(--primary));
+}
+
+.react-calendar__tile--active {
+  background-color: hsl(var(--primary)) !important;
+  color: hsl(var(--primary-foreground)) !important;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.react-calendar__tile--now {
+  background-color: hsl(var(--primary)) !important;
+  color: hsl(var(--primary-foreground)) !important;
+  border-radius: 0.25rem !important;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.react-calendar__tile--hasEvents {
+  font-weight: 600;
+}
+
+.react-calendar__tile--neighboringMonth {
+  color: hsl(var(--muted-foreground));
+}
+
+/* Dark mode support */
+.dark .react-calendar__navigation button {
+  color: hsl(var(--foreground));
+}
+
+.dark .react-calendar__navigation button:hover {
+  background-color: hsl(var(--primary) / 0.1);
+  color: hsl(var(--foreground));
+}
+
+.dark .react-calendar__month-view__weekdays {
+  color: hsl(var(--muted-foreground));
+}
+
+.dark .react-calendar__tile {
+  color: hsl(var(--foreground));
+}
+
+.dark .react-calendar__tile:hover {
+  background-color: hsl(var(--primary) / 0.15);
+  color: hsl(var(--foreground));
+}
+
+.dark .react-calendar__tile--neighboringMonth {
+  color: hsl(var(--muted-foreground));
+}
+
+/* DancerGirl Brand Color System */
+@layer base {
+  :root {
+    /* Caribbean Brand Color Palette */
+    --caribbean-orange: 32 96% 59%;    /* #FB9E32 - Primary / brand accent */
+    --caribbean-gold: 38 95% 71%;      /* #FBC86D - Secondary / highlights */
+    --caribbean-coral: 3 57% 59%;      /* #D26059 - Alert / vibrant accent */
+    --caribbean-dark: 348 47% 16%;     /* #3A151C - Dark background */
+    --caribbean-burgundy: 351 33% 38%; /* #81414B - Dark muted / secondary dark */
+    --ballet-white: 0 0% 99%;          /* #FEFEFE - Main background */
+    --subtle-gray: 0 0% 97%;           /* #F7F7F7 - Subtle backgrounds */
+    --warm-gray: 20 5% 90%;            /* #E8E6E3 - Light borders */
+
+    /* Design System Variables */
+    --background: var(--ballet-white);
+    --foreground: 0 0% 9%;
+    --card: var(--ballet-white);
+    --card-foreground: 0 0% 9%;
+    --popover: var(--ballet-white);
+    --popover-foreground: 0 0% 9%;
+    --primary: var(--caribbean-orange);
+    --primary-foreground: var(--ballet-white);
+    --secondary: var(--caribbean-gold);
+    --secondary-foreground: 0 0% 9%;
+    --muted: var(--subtle-gray);
+    --muted-foreground: var(--caribbean-burgundy);
+    --accent: var(--caribbean-coral);
+    --accent-foreground: var(--ballet-white);
+    --destructive: 0 84% 60%;
+    --destructive-foreground: var(--ballet-white);
+    --border: var(--warm-gray);
+    --input: var(--ballet-white);
+    --ring: var(--caribbean-orange);
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: var(--caribbean-dark);
+    --foreground: 0 0% 96%;
+    --card: 348 40% 12%;
+    --card-foreground: 0 0% 96%;
+    --popover: 348 40% 12%;
+    --popover-foreground: 0 0% 96%;
+    --primary: var(--caribbean-orange);
+    --primary-foreground: var(--ballet-white);
+    --secondary: var(--caribbean-burgundy);
+    --secondary-foreground: var(--ballet-white);
+    --muted: var(--caribbean-burgundy);
+    --muted-foreground: 0 0% 75%;
+    --accent: var(--caribbean-coral);
+    --accent-foreground: var(--ballet-white);
+    --destructive: 0 75% 55%;
+    --destructive-foreground: var(--ballet-white);
+    --border: var(--caribbean-burgundy);
+    --input: var(--caribbean-burgundy);
+    --ring: var(--caribbean-gold);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  
+  html, body {
+    @apply bg-background text-foreground;
+    font-family: 'Cambria', Georgia, 'Times New Roman', serif;
+    font-feature-settings: "kern" 1, "liga" 1, "calt" 1, "onum" 1, "pnum" 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    font-weight: 400;
+    line-height: 1.6;
+    overscroll-behavior: none;
+    -webkit-overscroll-behavior: none;
+  }
+
+  /* Prevent layout shifts during page loading */
+  #root {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Ensure images don't cause layout shift */
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* Smooth transitions for theme changes */
+  * {
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+  }
+  
+  /* DancerGirl Brand Typography Hierarchy - UNIFORM SYSTEM */
+  
+  /* Logo Font - Dancing Script for brand titles only */
+  .brand-logo, .logo-text {
+    font-family: 'Dancing Script', cursive;
+    font-weight: 600;
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    line-height: 1.2;
+    color: hsl(var(--mocha-brown));
+    letter-spacing: 0.02em;
+  }
+  
+  /* PAGE HEADERS - Consistent across all pages */
+  .page-title, .page-header h1 {
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: bold;
+    font-size: clamp(2.5rem, 5vw, 4rem); /* Responsive 40-64pt */
+    line-height: 1.1;
+    margin-bottom: 1rem;
+    color: hsl(var(--foreground));
+    text-align: center;
+    letter-spacing: -0.02em;
+  }
+  
+  /* PAGE SUBTITLES - Consistent spacing and typography */
+  .page-subtitle, .page-header p {
+    font-family: 'Cambria', Georgia, serif;
+    font-weight: 400;
+    font-size: clamp(1.125rem, 2vw, 1.5rem); /* 18-24pt */
+    line-height: 1.5;
+    margin-bottom: 2rem;
+    color: hsl(var(--muted-foreground));
+    text-align: center;
+    max-width: 48rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  /* SECTION HEADERS - Uniform styling for all sections */
+  .section-title, h2, .headline, .feature-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-weight: 600;
+    font-size: clamp(1.75rem, 3vw, 2.5rem); /* 28-40pt */
+    line-height: 1.2;
+    margin-bottom: 1rem;
+    color: hsl(var(--foreground));
+    letter-spacing: -0.01em;
+  }
+  
+  /* SUBSECTION HEADERS - Consistent h3 styling */
+  .subsection-title, h3, .subheading {
+    font-family: 'Playfair Display', serif;
+    font-weight: 500;
+    font-size: clamp(1.5rem, 2.5vw, 2rem); /* 24-32pt */
+    line-height: 1.3;
+    margin-bottom: 0.75rem;
+    color: hsl(var(--foreground));
+  }
+  
+  /* CARD TITLES - Uniform card/component titles */
+  .card-title, h4 {
+    font-family: 'Times New Roman', serif;
+    font-weight: 600;
+    font-size: clamp(1.25rem, 2vw, 1.5rem); /* 20-24pt */
+    line-height: 1.4;
+    margin-bottom: 0.5rem;
+    color: hsl(var(--foreground));
+  }
+  
+  /* SMALL TITLES - Consistent minor headings */
+  .small-title, h5 {
+    font-family: 'Times New Roman', serif;
+    font-weight: 600;
+    font-size: clamp(1.125rem, 1.5vw, 1.25rem); /* 18-20pt */
+    line-height: 1.4;
+    margin-bottom: 0.5rem;
+    color: hsl(var(--foreground));
+  }
+  
+  /* MICRO TITLES - Tiny labels and captions */
+  .micro-title, h6 {
+    font-family: 'Times New Roman', serif;
+    font-weight: 500;
+    font-size: clamp(0.875rem, 1vw, 1rem); /* 14-16pt */
+    line-height: 1.4;
+    margin-bottom: 0.25rem;
+    color: hsl(var(--muted-foreground));
+  }
+  
+  /* Body Text Font - Cambria for article body, descriptions, footnotes */
+  p, .body-text {
+    font-family: 'Cambria', Georgia, serif;
+    font-weight: 400;
+    font-size: 1rem; /* 16px base for comfortable reading */
+    line-height: 1.75;
+    margin-bottom: 1rem;
+    color: hsl(var(--foreground));
+    letter-spacing: 0.01em;
+  }
+  
+  /* Large Body Text - For leads/intros */
+  .body-large, .lead {
+    font-family: 'Cambria', Georgia, serif;
+    font-weight: 400;
+    font-size: clamp(1rem, 1.5vw, 1.125rem);
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    color: hsl(var(--foreground));
+  }
+  
+  /* Captions - 10pt Open Sans Italic per brand guide */
+  .text-small, .caption {
+    font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-weight: 400;
+    font-size: 0.75rem; /* 10pt equivalent */
+    line-height: 1.5;
+    color: hsl(var(--muted-foreground));
+    font-style: italic;
+  }
+  
+  /* Button and UI Text */
+  .btn-text, button {
+    font-family: 'Times New Roman', serif;
+    font-weight: 600;
+    font-size: 0.875rem;
+    line-height: 1;
+    letter-spacing: 0.025em;
+  }
+  
+  /* Navigation buttons should not be uppercase */
+  .nav-primary, .nav-secondary, .nav-mobile {
+    text-transform: none !important;
+  }
+  
+  /* Ensure navigation items maintain proper case */
+  nav button, nav a, .nav-primary, .nav-secondary, .nav-mobile {
+    text-transform: none !important;
+  }
+  
+  /* Link Text */
+  a, .link {
+    font-family: 'Times New Roman', serif;
+    font-weight: 500;
+    text-decoration: none;
+    color: hsl(var(--mocha-brown));
+    transition: all 0.2s ease;
+    border-radius: 2px;
+  }
+  
+  a:hover, .link:hover {
+    color: hsl(var(--deep-rose-brown));
+  }
+  
+  a:focus, .link:focus {
+    outline: 2px solid hsl(var(--mocha-brown) / 0.5);
+    outline-offset: 2px;
+  }
+  
+  /* Pull Quotes - Times New Roman as specified */
+  .pull-quote {
+    font-family: 'Times New Roman', serif;
+    font-weight: 400;
+    font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+    line-height: 1.4;
+    font-style: italic;
+    margin: 2rem 0;
+    padding: 1rem 1.5rem;
+    border-left: 4px solid hsl(var(--mocha-brown));
+    color: hsl(var(--foreground));
+    background-color: hsl(var(--neutral-gray));
+  }
+  
+  /* Article content styling */
+  .article-content {
+    @apply max-w-3xl mx-auto px-4;
+    font-family: 'Cambria', Georgia, 'Libre Baskerville', serif;
+    font-size: 1.15rem;
+    line-height: 1.9;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
+    letter-spacing: 0.01em;
+  }
+
+  .article-content p {
+    @apply mb-7;
+    font-size: 1.15rem;
+    line-height: 1.9;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
+    text-align: left;
+  }
+  
+  .article-content h2 {
+    @apply mt-12 mb-6 text-2xl md:text-3xl font-bold;
+  }
+  
+  .article-content h3 {
+    @apply mt-10 mb-4 text-xl md:text-2xl font-bold;
+  }
+  
+  /* NYT-style pull quotes */
+  .pull-quote {
+    @apply text-2xl md:text-3xl leading-relaxed italic my-8 pl-6 border-l-4 border-foreground/20;
+    font-family: 'Libre Baskerville', serif;
+    color: hsl(var(--foreground) / 0.9);
+  }
+  
+  /* Captions */
+  .caption {
+    @apply text-sm text-muted-foreground mt-2 mb-6;
+    font-family: 'Libre Franklin', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    line-height: 1.4;
+  }
+  
+  /* Bylines */
+  .byline {
+    @apply text-sm text-muted-foreground mb-6;
+    font-family: 'Libre Franklin', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    font-weight: 500;
+  }
+  
+  /* Section headers */
+  .section-header {
+    @apply text-xs uppercase tracking-wider font-bold text-muted-foreground mb-4;
+    font-family: 'Libre Franklin', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    letter-spacing: 0.1em;
+  }
+  
+  /* UNIFORM SPACING SYSTEM */
+  
+  /* UNIFORM SPACING SYSTEM - Using Tailwind classes */
+  .page-container {
+    @apply max-w-6xl mx-auto px-4 py-12;
+  }
+  
+  @screen sm {
+    .page-container {
+      @apply px-6 py-16;
+    }
+  }
+  
+  @screen lg {
+    .page-container {
+      @apply px-8 py-20;
+    }
+  }
+  
+  /* Page Header Spacing - Consistent headers */
+  .page-header {
+    @apply mb-12 text-center;
+  }
+  
+  .page-header h1 {
+    @apply mb-4;
+  }
+  
+  .page-header p {
+    @apply mb-0;
+  }
+  
+  /* Section Spacing - Uniform section gaps */
+  .section-spacing {
+    @apply py-16;
+  }
+  
+  .section-spacing:last-child {
+    @apply pb-0;
+  }
+  
+  /* Content Spacing - Standard content blocks */
+  .content-block {
+    @apply mb-8;
+  }
+
+  /* Brand Typography Classes */
+  .font-logo {
+    font-family: 'Dancing Script', cursive;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+  
+  .font-primary {
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: bold;
+  }
+  
+  .font-secondary {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-weight: 600;
+  }
+  
+  .font-body {
+    font-family: 'Cambria', Georgia, serif;
+    font-weight: 400;
+  }
+  
+  /* Typography Utilities - Using @apply for Tailwind compatibility */
+  .text-page-title {
+    @apply font-primary text-foreground text-center mb-4;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+  
+  .text-page-subtitle {
+    @apply font-body text-muted-foreground text-center mb-8;
+    font-size: clamp(1.125rem, 2vw, 1.5rem);
+    line-height: 1.5;
+    max-width: 48rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  /* Page Header Spacing - Consistent spacing after navbar */
+  .page-header {
+    @apply pt-8 pb-8 md:pt-12 md:pb-12;
+  }
+  
+  /* Animation Classes */
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+  
+  @keyframes pulse-glow {
+    0%, 100% { 
+      opacity: 0.6;
+      transform: scale(1);
+    }
+    50% { 
+      opacity: 1;
+      transform: scale(1.05);
+    }
+  }
+  
+  @keyframes slide-in-up {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+  
+  .animate-pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite;
+  }
+  
+  .animate-slide-in-up {
+    animation: slide-in-up 0.6s ease-out forwards;
+  }
+  
+  /* Smooth scroll behavior */
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  /* Enhanced transitions for interactive elements */
+  button, a, .card {
+    @apply transition-all duration-300 ease-out;
+  }
+  
+  /* Hover lift effect */
+  .hover-lift {
+    @apply transition-all duration-300 hover:-translate-y-1 hover:shadow-xl;
+  }
+  
+  /* Glassmorphism effect */
+  .glass-card {
+    background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.18);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+  }
+  
+  .glass-card:hover {
+    background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.08) 100%);
+    box-shadow: 0 16px 64px rgba(0,0,0,0.15);
+  }
+  
+  /* Dark mode glassmorphism */
+  .dark .glass-card {
+    background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+  
+  .dark .glass-card:hover {
+    background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.04) 100%);
+  }
+  
+  .section-title {
+    @apply font-secondary text-foreground mb-4;
+    font-size: clamp(1.75rem, 3vw, 2.5rem);
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+  
+  .subsection-title {
+    @apply font-secondary text-foreground mb-3;
+    font-size: clamp(1.5rem, 2.5vw, 2rem);
+    line-height: 1.3;
+  }
+  
+  .card-title {
+    @apply font-primary text-foreground mb-2;
+    font-size: clamp(1.25rem, 2vw, 1.5rem);
+    line-height: 1.4;
+  }
+  
+  /* Navigation Typography - Following Brand Guidelines */
+  .nav-primary {
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: bold;
+    font-size: 1rem; /* 16pt equivalent for navbar */
+    line-height: 1.2;
+    letter-spacing: 0.02em;
+  }
+  
+  .nav-secondary {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-weight: 600;
+    font-size: 0.875rem; /* 14pt equivalent for sub-navigation */
+    line-height: 1.3;
+    letter-spacing: 0.01em;
+  }
+  
+  .nav-mobile {
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: bold;
+    font-size: 1.125rem; /* 18pt equivalent for mobile */
+    line-height: 1.2;
+  }
+  
+  /* Custom font classes - Legacy support */
+  .font-darlington {
+    font-family: 'Dancing Script', cursive;
+    letter-spacing: 0.05em;
+    font-weight: 600;
+    text-transform: none;
+  }
+  
+  .font-heading {
+    @apply font-primary;
+  }
+  
+  /* Grid layout */
+  .layout-grid {
+    @apply grid grid-cols-1 md:grid-cols-12 gap-6 max-w-7xl mx-auto px-4;
+  }
+  
+  .main-content {
+    @apply md:col-span-8 lg:col-span-9;
+  }
+  
+  .sidebar {
+    @apply md:col-span-4 lg:col-span-3;
+  }
+  
+  /* Button styles - Brand Guidelines */
+  .btn {
+    @apply inline-flex items-center justify-center rounded-md px-6 py-2.5 text-sm font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background;
+    font-family: 'Times New Roman', serif;
+    letter-spacing: 0.025em;
+    border: 1px solid hsl(var(--mocha-brown) / 0.2);
+    box-shadow: 0 1px 2px hsl(var(--mocha-brown) / 0.06);
+  }
+  
+  .btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px hsl(var(--mocha-brown) / 0.1);
+  }
+  
+  .btn-primary {
+    @apply bg-accent text-accent-foreground hover:bg-accent/90;
+    border-color: hsl(var(--deep-rose-brown) / 0.3);
+  }
+  
+  /* Brand decorative elements */
+  .brand-divider {
+    height: 2px;
+    background: linear-gradient(to right, transparent, hsl(var(--mocha-brown)), hsl(var(--deep-rose-brown)), hsl(var(--mocha-brown)), transparent);
+    margin: 2rem 0;
+  }
+  
+  .brand-accent {
+    color: hsl(var(--mocha-brown));
+  }
+  
+  .brand-accent-bg {
+    background-color: hsl(var(--neutral-gray));
+  }
+  
+  /* Card styles - Brand Guidelines */
+  .card {
+    @apply bg-background backdrop-blur-sm border border-border/50 overflow-hidden transition-all duration-300 rounded-lg;
+    background-color: hsl(var(--background) / 0.98);
+    box-shadow: 0 1px 3px hsl(var(--mocha-brown) / 0.08), 0 1px 2px hsl(var(--mocha-brown) / 0.06);
+  }
+  
+  .card:hover {
+    box-shadow: 0 4px 12px hsl(var(--mocha-brown) / 0.12), 0 2px 4px hsl(var(--mocha-brown) / 0.08);
+    border-color: hsl(var(--mocha-brown) / 0.3);
+    transform: translateY(-1px);
+  }
+  
+  /* Magazine-style layouts */
+  .magazine-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin: 2rem 0;
+  }
+  
+  .featured-article {
+    border-left: 4px solid hsl(var(--mocha-brown));
+    padding-left: 1.5rem;
+    background: linear-gradient(135deg, hsl(var(--neutral-gray) / 0.05), transparent);
+  }
+  
+  /* Animation */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  .animate-fade-in {
+    animation: fadeIn 0.5s ease-out forwards;
+  }
+  
+  /* Hide scrollbar */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* NYT-style drop cap */
+  .drop-cap:first-letter {
+    float: left;
+    font-size: 4.5rem;
+    line-height: 0.75;
+    padding: 0.1em 0.2em 0 0;
+    font-family: 'Darlington', serif;
+    color: hsl(var(--primary));
+  }
+  
+  /* Portable Text specific styling */
+  .prose {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
+  }
+  
+  .prose p {
+    text-align: left;
+    margin-bottom: 1.75rem;
+    line-height: 1.85;
+    font-size: 1.1rem;
+  }
+  
+  .prose h1, .prose h2, .prose h3, .prose h4 {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+  
+  .prose ul, .prose ol {
+    margin-bottom: 1.5rem;
+    padding-left: 1.5rem;
+  }
+  
+  .prose li {
+    margin-bottom: 0.5rem;
+    line-height: 1.6;
+  }
+  
+  .prose blockquote {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    font-style: italic;
+    margin: 2rem 0;
+    padding: 1rem 1.5rem;
+    border-left: 4px solid hsl(var(--primary));
+    background-color: hsl(var(--muted) / 0.3);
+    border-radius: 0 0.5rem 0.5rem 0;
+  }
+  
+  .prose a {
+    word-break: break-word;
+    overflow-wrap: break-word;
+  }
+  
+  /* Responsive typography - Brand Guidelines */
+  @media (max-width: 768px) {
+    html {
+      font-size: 16px;
+    }
+    
+    .brand-logo {
+      font-size: clamp(2rem, 6vw, 3rem);
+    }
+    
+    h1 {
+      font-size: clamp(1.75rem, 4vw, 2.5rem);
+    }
+    
+    h2 {
+      font-size: clamp(1.5rem, 3vw, 2rem);
+    }
+    
+    .article-content {
+      font-size: 1.05rem;
+    }
+    
+    .prose p {
+      text-align: left;
+    }
+    
+    .magazine-grid {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+    
+    .card {
+      margin-bottom: 1rem;
+    }
+  }
+  
+  /* Tablet responsive adjustments */
+  @media (min-width: 769px) and (max-width: 1024px) {
+    .magazine-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .brand-logo {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+    }
+  }
+}
+/* PrimeReact Carousel overrides */
+.latest-carousel .p-carousel-indicators {
+  padding: 1rem 0 0;
+}
+.latest-carousel .p-carousel-indicator button {
+  background: hsl(var(--border));
+  border-radius: 50%;
+  width: 8px;
+  height: 8px;
+  border: none;
+  transition: background 0.2s;
+}
+.latest-carousel .p-carousel-indicator.p-highlight button {
+  background: hsl(var(--primary));
+}
+.latest-carousel .p-carousel-prev,
+.latest-carousel .p-carousel-next {
+  color: hsl(var(--foreground));
+  background: hsl(var(--card));
+  border: 1px solid hsl(var(--border));
+  border-radius: 50%;
+  width: 2.5rem;
+  height: 2.5rem;
+}
+.latest-carousel .p-carousel-prev:hover,
+.latest-carousel .p-carousel-next:hover {
+  background: hsl(var(--primary) / 0.1);
+  border-color: hsl(var(--primary) / 0.4);
+}

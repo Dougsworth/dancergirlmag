@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DancerGirl Magazine - Caribbean Dance Culture</title>
+    <meta name="description" content="The Caribbean's first digital magazine dedicated solely to dance and its dancers. Amplifying talent, promoting concert dance, and connecting communities." />
+    <meta name="author" content="DancerGirl Magazine" />
+    <meta name="keywords" content="Caribbean dance, dance magazine, Caribbean culture, dance artists, choreographers, dance events" />
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/DG Monogram Letters ONLY Digital Black.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/DG Monogram Letters ONLY Digital Black.png">
+    <link rel="apple-touch-icon" href="/DG Monogram Letters ONLY Digital Black.png">
+    
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#EC4899" />
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://dancergirl.vercel.app" />
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Source+Sans+Pro:wght@300;400;600&family=Dancing+Script:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <meta property="og:title" content="DancerGirl Magazine - Caribbean Dance Culture" />
+    <meta property="og:description" content="The Caribbean's first digital magazine dedicated solely to dance and its dancers. Amplifying talent, promoting concert dance, and connecting communities." />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="/DG Monogram Letters ONLY Digital Black.png" />
+    <meta property="og:url" content="https://dancergirl.vercel.app" />
+    <meta property="og:site_name" content="DancerGirl Magazine" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@dancergirlmag" />
+    <meta name="twitter:title" content="DancerGirl Magazine - Caribbean Dance Culture" />
+    <meta name="twitter:description" content="The Caribbean's first digital magazine dedicated solely to dance and its dancers" />
+    <meta name="twitter:image" content="https://dancergirl.vercel.app/DG Monogram Letters ONLY Digital Black.png" />
+  </head>
+
+  <body>
+    <div id="root"></div>
+    <script>
+      // Suppress YouTube API errors in console
+      const originalConsoleError = console.error;
+      console.error = function(...args) {
+        const message = args.join(' ');
+        // Don't log YouTube API errors
+        if (message.includes('youtubei/v1/log_event') || 
+            message.includes('youtube.com/api/stats') ||
+            message.includes('youtube.com/ptracking')) {
+          return;
+        }
+        originalConsoleError.apply(console, args);
+      };
+    </script>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

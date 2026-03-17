@@ -1,0 +1,62 @@
+[
+  {
+    "_type": "featuredVideo",
+    "title": "SOCA DANCE TUTORIAL | Easy Steps for Beginners",
+    "description": "Learn the basics of soca dance with this beginner-friendly tutorial. Perfect for anyone wanting to get started with Caribbean dance styles.",
+    "videoUrl": "https://www.youtube.com/watch?v=SJWdnCkRqqg",
+    "duration": 754,
+    "featured": true,
+    "tags": ["soca", "beginner", "tutorial", "caribbean"],
+    "publishedAt": "2024-01-15T10:00:00Z"
+  },
+  {
+    "_type": "featuredVideo",
+    "title": "Caribbean Dancehall Moves | Step by Step Tutorial",
+    "description": "Master essential dancehall moves with this comprehensive tutorial. Learn the techniques that make Caribbean dance so vibrant and energetic.",
+    "videoUrl": "https://www.youtube.com/watch?v=Wx7iNWGJI0g",
+    "duration": 525,
+    "featured": false,
+    "tags": ["dancehall", "caribbean", "tutorial", "intermediate"],
+    "publishedAt": "2024-01-10T14:30:00Z"
+  },
+  {
+    "_type": "featuredVideo",
+    "title": "Afro-Caribbean Dance Workout | Full Body Cardio",
+    "description": "Get your heart pumping with this energetic Afro-Caribbean dance workout. Perfect for fitness enthusiasts who love to dance.",
+    "videoUrl": "https://www.youtube.com/watch?v=t5usj5NNw5Q",
+    "duration": 1455,
+    "featured": false,
+    "tags": ["workout", "cardio", "afro-caribbean", "fitness"],
+    "publishedAt": "2024-01-08T09:15:00Z"
+  },
+  {
+    "_type": "featuredVideo",
+    "title": "Traditional Caribbean Folk Dance Performance",
+    "description": "Experience the rich cultural heritage of Caribbean folk dance through this beautiful performance showcasing traditional movements and rhythms.",
+    "videoUrl": "https://www.youtube.com/watch?v=4Hn2F7Cqh8Q",
+    "duration": 922,
+    "featured": false,
+    "tags": ["folk", "traditional", "cultural", "performance"],
+    "publishedAt": "2024-01-05T16:45:00Z"
+  },
+  {
+    "_type": "featuredVideo",
+    "title": "Carnival Dance Moves | Trinidad & Tobago Style",
+    "description": "Learn authentic carnival dance moves from Trinidad & Tobago. Get ready to move your body to the infectious rhythms of carnival.",
+    "videoUrl": "https://www.youtube.com/watch?v=bKtx9GXO5ac",
+    "duration": 390,
+    "featured": false,
+    "tags": ["carnival", "trinidad", "tobago", "festival"],
+    "publishedAt": "2024-01-03T11:20:00Z"
+  },
+  {
+    "_type": "featuredVideo",
+    "title": "Salsa & Merengue Dance Lesson | Caribbean Style",
+    "description": "Discover the Latin-Caribbean connection with this salsa and merengue dance lesson. Perfect for couples and solo dancers alike.",
+    "videoUrl": "https://www.youtube.com/watch?v=hRJVVnr0kyk",
+    "duration": 1125,
+    "featured": false,
+    "tags": ["salsa", "merengue", "latin", "caribbean"],
+    "publishedAt": "2024-01-01T13:00:00Z"
+  }
+] 
