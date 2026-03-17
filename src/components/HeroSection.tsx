@@ -6,8 +6,6 @@ import { getCurrentDancerOfMonth } from "@/lib/sanity/queries/dancers-of-month";
 import { urlFor } from "@/lib/sanity";
 import type { SanityDancerOfTheMonth } from "@/lib/sanity/types";
 
-const HERO_VIDEO_MP4 = "/hero-video.mp4";
-
 const HeroSection = () => {
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, [0, 300], [0, 100]);
@@ -23,12 +21,12 @@ const HeroSection = () => {
     : "";
 
   const heroImageUrl = dom?.featuredImage
-    ? urlFor(dom.featuredImage).width(1920).height(1080).url()
+    ? urlFor(dom.featuredImage)?.width(1920).height(1080).url()
     : null;
 
   return (
     <section className="relative h-screen min-h-[600px] flex flex-col overflow-hidden bg-black w-full">
-      {/* Background — image when DOM has one, else video */}
+      {/* Background — image when DOM has one, else animated gradient */}
       <motion.div className="absolute inset-0" style={{ y, opacity }}>
         {heroImageUrl ? (
           <img
@@ -37,17 +35,48 @@ const HeroSection = () => {
             className="w-full h-full object-cover"
           />
         ) : (
-          <video
-            className="w-full h-full object-cover"
-            autoPlay
-            muted
-            loop
-            playsInline
-            // @ts-ignore
-            webkit-playsinline="true"
-            preload="auto"
-            src={HERO_VIDEO_MP4}
-          />
+          <div className="w-full h-full relative overflow-hidden">
+            {/* Animated gradient background */}
+            <motion.div
+              className="absolute inset-0"
+              style={{
+                background: "radial-gradient(ellipse at 30% 20%, #4a1a2e 0%, transparent 50%), radial-gradient(ellipse at 70% 80%, #2a1520 0%, transparent 50%), radial-gradient(ellipse at 50% 50%, #1a0a12 0%, #0a0406 100%)",
+              }}
+              animate={{
+                backgroundPosition: ["0% 0%", "100% 100%", "0% 0%"],
+              }}
+              transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+            />
+            {/* Subtle floating light accents */}
+            <motion.div
+              className="absolute w-[600px] h-[600px] rounded-full opacity-[0.07]"
+              style={{
+                background: "radial-gradient(circle, #d4a574 0%, transparent 70%)",
+                top: "10%",
+                left: "20%",
+              }}
+              animate={{
+                x: [0, 80, -40, 0],
+                y: [0, -60, 40, 0],
+                scale: [1, 1.2, 0.9, 1],
+              }}
+              transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
+            />
+            <motion.div
+              className="absolute w-[500px] h-[500px] rounded-full opacity-[0.05]"
+              style={{
+                background: "radial-gradient(circle, #8b4557 0%, transparent 70%)",
+                bottom: "10%",
+                right: "15%",
+              }}
+              animate={{
+                x: [0, -60, 50, 0],
+                y: [0, 50, -30, 0],
+                scale: [1, 0.8, 1.1, 1],
+              }}
+              transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
+            />
+          </div>
         )}
 
         {/* Overlays for readability */}
