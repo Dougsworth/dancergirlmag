@@ -11,8 +11,8 @@ import type { SanityArticle, ArticleQueryParams } from '../types';
  * Get all articles with filtering and pagination
  */
 export async function getArticles(params?: ArticleQueryParams): Promise<SanityArticle[]> {
-  const { limit = 12, category, featured, excludeCategories } = params || {};
-  
+  const { limit = 12, section, featured, excludeSections } = params || {};
+
   // Build query filters
   let filters = [
     '_type == "article"',
@@ -22,15 +22,15 @@ export async function getArticles(params?: ArticleQueryParams): Promise<SanityAr
   if (featured !== undefined) {
     filters.push('featured == $featured');
   }
-  
-  if (category) {
-    filters.push('$category in categories[]->slug.current');
+
+  if (section) {
+    filters.push('section == $section');
   }
-  
-  // Handle excluded categories
-  if (excludeCategories && excludeCategories.length > 0) {
-    excludeCategories.forEach((_, index) => {
-      filters.push(`!($excludeCategory${index} in categories[]->slug.current)`);
+
+  // Handle excluded sections
+  if (excludeSections && excludeSections.length > 0) {
+    excludeSections.forEach((_, index) => {
+      filters.push(`section != $excludeSection${index}`);
     });
   }
 
@@ -41,21 +41,21 @@ export async function getArticles(params?: ArticleQueryParams): Promise<SanityAr
     publishedAt,
     excerpt,
     mainImage,
-    "categories": categories[]->{title, slug},
+    section,
     body,
-    "author": author->{name},
+    author,
     featured
   }`;
-  
+
   // Build query parameters
   const queryParams: Record<string, any> = { limit };
-  
+
   if (featured !== undefined) queryParams.featured = featured;
-  if (category) queryParams.category = category;
-  
-  if (excludeCategories && excludeCategories.length > 0) {
-    excludeCategories.forEach((excludeCategory, index) => {
-      queryParams[`excludeCategory${index}`] = excludeCategory;
+  if (section) queryParams.section = section;
+
+  if (excludeSections && excludeSections.length > 0) {
+    excludeSections.forEach((excludeSection, index) => {
+      queryParams[`excludeSection${index}`] = excludeSection;
     });
   }
 
@@ -85,13 +85,13 @@ export async function getArticle(slug: string): Promise<SanityArticle | null> {
     excerpt,
     body,
     mainImage,
-    "author": author->{name},
-    "categories": categories[]->{title, slug},
+    section,
+    author,
     featured
   }`;
-  
+
   const article = await sanityFetch<SanityArticle | null>(query, { slug });
-  
+
   if (!article) return null;
 
   // Transform internationalized fields
@@ -113,13 +113,13 @@ export async function getFeaturedArticles(limit: number = 6): Promise<SanityArti
 }
 
 /**
- * Get articles by category
+ * Get articles by section
  */
-export async function getArticlesByCategory(
-  categorySlug: string, 
+export async function getArticlesBySection(
+  section: string,
   limit: number = 12
 ): Promise<SanityArticle[]> {
-  return getArticles({ limit, category: categorySlug });
+  return getArticles({ limit, section });
 }
 
 /**

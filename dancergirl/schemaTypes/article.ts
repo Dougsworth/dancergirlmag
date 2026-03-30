@@ -22,7 +22,7 @@ export default defineType({
     },
     {
       name: 'relationships',
-      title: '🏷️ Tags & Categories',
+      title: '🔗 Related Articles',
     },
     {
       name: 'seo',
@@ -33,7 +33,7 @@ export default defineType({
     defineField({
       name: 'title',
       title: 'Article Headline ✨',
-      type: 'internationalizedString',
+      type: 'string',
       description: 'Write a catchy headline that will grab readers\' attention. This appears at the top of your article and in search results.',
       group: 'content',
       validation: (Rule) => Rule.required().error('Every article needs a great headline!'),
@@ -45,7 +45,7 @@ export default defineType({
       description: 'This creates the web address for your article. Click "Generate" after writing your headline.',
       group: 'content',
       options: {
-        source: 'title.en',
+        source: 'title',
         maxLength: 96,
       },
       validation: (Rule) => Rule.required().error('Click "Generate" to create the website link'),
@@ -53,7 +53,8 @@ export default defineType({
     defineField({
       name: 'excerpt',
       title: 'Article Preview 💬',
-      type: 'internationalizedText',
+      type: 'text',
+      rows: 3,
       description: 'Write a short, exciting preview that will make people want to read your full article. This appears on the homepage and in article lists.',
       group: 'content',
       validation: (Rule) => Rule.required().error('Please write a preview'),
@@ -79,25 +80,31 @@ export default defineType({
     defineField({
       name: 'author',
       title: 'Who Wrote This? ✍️',
-      type: 'reference',
-      description: 'Select the author who wrote this article. If they\'re not in the list, add them first in the Authors section.',
-      group: 'relationships',
-      to: {type: 'author'},
-      validation: (Rule) => Rule.required().error('Please choose an author'),
+      type: 'string',
+      description: 'Enter the author\'s name.',
+      group: 'content',
     }),
     defineField({
-      name: 'categories',
-      title: 'What Topics? 🏷️',
-      type: 'array',
-      description: 'Choose the topics this article covers. This helps readers find articles they\'re interested in. You must select at least one!',
-      group: 'relationships',
-      of: [{type: 'reference', to: {type: 'category'}}],
-      validation: (Rule) => Rule.required().min(1).error('Please select at least one topic category'),
+      name: 'section',
+      title: 'Which Section? 📂',
+      type: 'string',
+      description: 'Choose which part of the site this article belongs to.',
+      group: 'content',
+      options: {
+        list: [
+          { title: 'Money Moves', value: 'money-moves' },
+          { title: 'Choreographers Corner', value: 'choreographers-corner' },
+          { title: 'Dancers: Speak Up', value: 'dancer-speak-up' },
+          { title: 'General', value: 'general' },
+        ],
+        layout: 'radio',
+      },
+      validation: (Rule) => Rule.required().error('Please choose a section'),
     }),
     defineField({
       name: 'body',
       title: 'Write Your Article 📝',
-      type: 'internationalizedBlockContent',
+      type: 'blockContent',
       description: 'This is where you write the full article! You can add text, images, videos, quotes, and more. Use the toolbar to format your text and make it look great.',
       group: 'content',
       validation: (Rule) => Rule.required().error('Your article needs content!'),
@@ -154,8 +161,8 @@ export default defineType({
   ],
   preview: {
     select: {
-      title: 'title.en',
-      author: 'author.name',
+      title: 'title',
+      author: 'author',
       media: 'mainImage',
       publishedAt: 'publishedAt',
     },

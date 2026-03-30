@@ -15,7 +15,7 @@ export default function MoneyMoves() {
   const articlesPerPage = 9;
 
   useEffect(() => {
-    getArticles({ limit: 100, category: "money-moves" })
+    getArticles({ limit: 100, section: "money-moves" })
       .then(setArticles)
       .catch(() => {})
       .finally(() => setLoading(false));

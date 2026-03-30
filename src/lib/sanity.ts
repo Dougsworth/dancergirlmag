@@ -29,7 +29,7 @@ import {
   getArticle as coreGetArticle,
   getFeaturedArticles as coreGetFeaturedArticles,
   getRecentArticles as coreGetRecentArticles,
-  getArticlesByCategory as coreGetArticlesByCategory,
+  getArticlesBySection as coreGetArticlesBySection,
   
   // Artists
   getArtists as coreGetArtists,
@@ -124,10 +124,7 @@ export async function getDancerBySlug(slug: string): Promise<any> {
   return coreGetArtistBySlug(slug);
 }
 
-export async function getPlaylists(): Promise<any[]> {
-  console.warn('getPlaylists: This feature is not yet implemented.');
-  return [];
-}
+// getPlaylists is now a real query, exported from ./sanity/queries/playlists
 
 export async function getTutorials(): Promise<any[]> {
   console.warn('getTutorials: This feature is not yet implemented.');

@@ -59,17 +59,110 @@ export interface SanityArticle {
   excerpt?: string | Record<string, string>;
   mainImage?: SanityImage;
   body?: any[];
-  categories?: Array<{
-    _id?: string;
-    title: string | Record<string, string>;
-    slug: SanitySlug;
-  }>;
-  author?: {
-    name: string;
-  };
+  section?: string;
+  author?: string;
   featured?: boolean;
   readTime?: number;
 }
+
+export interface SanityDancerOfTheMonth {
+  _id: string;
+  _type: 'dancerOfTheMonth';
+  dancerName: string;
+  month: string;
+  year: number;
+  slug: SanitySlug;
+  socialLinks?: Array<{
+    platform: string;
+    url: string;
+  }>;
+  featuredStory: any[];
+  excerpt?: string;
+  featuredImage?: SanityImage;
+  gallery?: SanityImage[];
+  videoHighlights?: Array<{
+    title: string;
+    videoUrl: string;
+    thumbnail?: SanityImage;
+    description?: string;
+  }>;
+  categories?: string[];
+  achievements?: Array<{
+    achievement: string;
+    year: number;
+    description?: string;
+  }>;
+  publishedAt?: string;
+  isFeatured?: boolean;
+  isActive?: boolean;
+  seoTitle?: string;
+  seoDescription?: string;
+}
+
+export interface SanityEvent {
+  _id: string;
+  _type: 'event';
+  title: string;
+  slug: SanitySlug;
+  description?: any[];
+  startDateTime: string;
+  endDateTime?: string;
+  location?: {
+    name?: string;
+    address?: string;
+    city?: string;
+    country?: string;
+    isOnline?: boolean;
+    meetingUrl?: string;
+  };
+  featuredImage?: SanityImage;
+  organizer?: string;
+  price?: number;
+  registrationRequired?: boolean;
+  registrationUrl?: string;
+  tags?: string[];
+}
+
+export interface SanityFounder {
+  _id: string;
+  _type: 'founder';
+  name?: string | Record<string, string>;
+  title?: string | Record<string, string>;
+  bio?: any[] | Record<string, any[]>;
+  image?: SanityImage;
+  quote?: string | Record<string, string>;
+  vision?: any[] | Record<string, any[]>;
+  email?: string;
+  socialLinks?: Array<{
+    platform: string;
+    url: string;
+  }>;
+  achievements?: Array<{
+    achievement: string | Record<string, string>;
+    year?: number;
+    description?: string | Record<string, string>;
+  }>;
+}
+
+// ==================== EDITOR LETTERS ====================
+
+export interface SanityEditorLetter {
+  _id: string;
+  _type: 'editorLetter';
+  title: string | Record<string, string>;
+  slug: SanitySlug;
+  mainImage?: SanityImage;
+  excerpt?: string | Record<string, string>;
+  content?: any[] | Record<string, any[]>;
+  publishedAt: string;
+  featured?: boolean;
+  tags?: string[];
+  seoTitle?: string | Record<string, string>;
+  seoDescription?: string | Record<string, string>;
+  author?: SanityFounder;
+}
+
+// ==================== LEGACY TYPES (schemas removed, kept for existing data) ====================
 
 export interface SanityArtist {
   _id: string;
@@ -78,6 +171,7 @@ export interface SanityArtist {
   slug: SanitySlug;
   bio?: string | Record<string, string>;
   profileImage?: SanityImage;
+  image?: SanityImage;
   socialLinks?: Array<{
     platform: string;
     url: string;
@@ -131,114 +225,27 @@ export interface SanityFeaturedStory {
   order?: number;
 }
 
-export interface SanityDancerOfTheMonth {
+// ==================== PLAYLIST ====================
+
+export interface SanityPlaylist {
   _id: string;
-  _type: 'dancerOfTheMonth';
-  month: string;
-  year: number;
+  _type: 'playlist';
+  title: string;
   slug: SanitySlug;
-  artist: {
-    _id: string;
-    name: string | Record<string, string>;
-    bio?: string | Record<string, string>;
-    image?: SanityImage;
-    socialLinks?: Array<{
-      platform: string;
-      url: string;
-    }>;
-  };
-  featuredStory: string | Record<string, string>;
-  excerpt?: string | Record<string, string>;
-  featuredImage?: SanityImage;
-  gallery?: SanityImage[];
-  videoHighlights?: Array<{
-    title: string;
-    videoUrl: string;
-    thumbnail?: SanityImage;
-    description?: string;
-  }>;
-  categories?: string[];
-  achievements?: Array<{
-    achievement: string | Record<string, string>;
-    year: number;
-    description?: string | Record<string, string>;
-  }>;
-  publishedAt?: string;
-  isFeatured?: boolean;
-  isActive?: boolean;
-  seoTitle?: string | Record<string, string>;
-  seoDescription?: string | Record<string, string>;
-}
-
-export interface SanityEvent {
-  _id: string;
-  _type: 'event';
-  title: string | Record<string, string>;
-  slug: SanitySlug;
-  description?: string | Record<string, string>;
-  startDateTime: string;
-  endDateTime?: string;
-  location?: {
-    name?: string;
-    address?: string;
-    city?: string;
-    isOnline?: boolean;
-  };
-  mainImage?: SanityImage;
-  ticketUrl?: string;
-  featured?: boolean;
-  categories?: Array<{
-    title: string;
-    slug: SanitySlug;
-  }>;
-}
-
-export interface SanityFounder {
-  _id: string;
-  _type: 'founder';
-  name?: string | Record<string, string>;
-  title?: string | Record<string, string>;
-  bio?: any[] | Record<string, any[]>;
-  image?: SanityImage;
-  quote?: string | Record<string, string>;
-  vision?: any[] | Record<string, any[]>;
-  email?: string;
-  socialLinks?: Array<{
-    platform: string;
-    url: string;
-  }>;
-  achievements?: Array<{
-    achievement: string | Record<string, string>;
-    year?: number;
-    description?: string | Record<string, string>;
-  }>;
-}
-
-// ==================== EDITOR LETTERS ====================
-
-export interface SanityEditorLetter {
-  _id: string;
-  _type: 'editorLetter';
-  title: string | Record<string, string>;
-  slug: SanitySlug;
-  mainImage?: SanityImage;
-  excerpt?: string | Record<string, string>;
-  content?: any[] | Record<string, any[]>;
-  publishedAt: string;
-  featured?: boolean;
+  platform: 'spotify' | 'apple' | 'youtube';
+  playlistUrl: string;
+  coverImage?: SanityImage;
+  description?: string;
   tags?: string[];
-  seoTitle?: string | Record<string, string>;
-  seoDescription?: string | Record<string, string>;
-  author?: SanityFounder;
 }
 
 // ==================== QUERY PARAMETERS ====================
 
 export interface ArticleQueryParams {
   limit?: number;
-  category?: string;
+  section?: string;
   featured?: boolean;
-  excludeCategories?: string[];
+  excludeSections?: string[];
 }
 
 export interface ArtistQueryParams {
@@ -255,5 +262,4 @@ export interface EventQueryParams {
   limit?: number;
   featured?: boolean;
   upcoming?: boolean;
-  category?: string;
 }

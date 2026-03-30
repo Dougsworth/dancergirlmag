@@ -16,13 +16,8 @@ interface Article {
   excerpt?: string;
   mainImage?: any;
   body?: any[];
-  categories?: Array<{
-    _id?: string;
-    title: string;
-    slug: {
-      current: string;
-    };
-  }>;
+  section?: string;
+  author?: string;
   readTime?: number;
 }
 
@@ -33,16 +28,9 @@ export default function StoryDetail() {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  // Function to determine back navigation based on article category
-  const getBackNavigation = (categories?: Array<{title: string, slug: {current: string}}>) => {
-    if (!categories || categories.length === 0) {
-      return { path: "/stories", label: "Back to Stories" };
-    }
-
-    const categorySlug = categories[0].slug.current;
-    const categoryTitle = getLocalizedContent(categories[0].title) || categories[0].title;
-
-    switch (categorySlug) {
+  // Function to determine back navigation based on article section
+  const getBackNavigation = (section?: string) => {
+    switch (section) {
       case "dancer-speak-up":
         return { path: "/dancer-speak-up", label: "Back to Dancer Speak Up" };
       case "choreographers-corner":
@@ -83,7 +71,7 @@ export default function StoryDetail() {
               excerpt: featuredStoryData.excerpt,
               mainImage: featuredStoryData.mainImage,
               body: featuredStoryData.body || [],
-              categories: [], // Featured stories don't have categories
+              section: 'general', // Featured stories default to general
               readTime: featuredStoryData.body ? Math.ceil(featuredStoryData.body.length / 3) : 5 // Rough estimate
             };
           }
@@ -113,7 +101,7 @@ export default function StoryDetail() {
         {/* Navigation Breadcrumb */}
         <nav className="mb-6">
           {(() => {
-            const backNav = getBackNavigation(article?.categories);
+            const backNav = getBackNavigation(article?.section);
             return (
               <Link 
                 to={backNav.path} 
@@ -143,7 +131,7 @@ export default function StoryDetail() {
               <div className="text-6xl mb-4">📄</div>
               <h2 className="text-2xl font-bold mb-4 text-foreground">{error}</h2>
               {(() => {
-                const backNav = getBackNavigation(article?.categories);
+                const backNav = getBackNavigation(article?.section);
                 return (
                   <Link 
                     to={backNav.path} 
@@ -160,16 +148,11 @@ export default function StoryDetail() {
           <article className="max-w-none">
             {/* Article Header */}
             <header className="mb-8">
-              {article.categories?.length ? (
+              {article.section ? (
                 <div className="mb-4">
-                  {article.categories.map((category) => (
-                    <span 
-                      key={category._id || category.title}
-                      className="inline-block px-3 py-1 text-xs font-medium text-primary border border-primary/30 bg-primary/5"
-                    >
-                      {getLocalizedContent(category.title) || category.title}
-                    </span>
-                  ))}
+                  <span className="inline-block px-3 py-1 text-xs font-medium text-primary border border-primary/30 bg-primary/5">
+                    {article.section.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase())}
+                  </span>
                 </div>
               ) : null}
               

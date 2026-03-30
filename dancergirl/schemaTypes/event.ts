@@ -167,20 +167,11 @@ export default defineType({
       description: 'Upload a great photo that represents your event. This could be from a previous event, the venue, or a promotional image.',
     }),
     defineField({
-      name: 'categories',
-      title: 'Event Categories 🏷️',
-      type: 'array',
-      fieldset: 'details',
-      of: [{ type: 'reference', to: [{ type: 'category' }] }],
-      description: 'What type of event is this? Choose categories that help people find and understand your event.',
-    }),
-    defineField({
       name: 'organizer',
       title: 'Who\'s Organizing? 📋',
-      type: 'reference',
+      type: 'string',
       fieldset: 'details',
-      to: [{ type: 'author' }],
-      description: 'Select who is organizing this event. This person\'s contact info may be displayed for questions.',
+      description: 'Enter the name of who is organizing this event.',
     }),
     defineField({
       name: 'price',

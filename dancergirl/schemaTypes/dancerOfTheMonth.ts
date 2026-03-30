@@ -38,6 +38,14 @@ export default defineType({
   ],
   fields: [
     defineField({
+      name: 'dancerName',
+      title: 'Dancer\'s Name 💃',
+      type: 'string',
+      fieldset: 'basics',
+      validation: (Rule) => Rule.required().error('Please enter the dancer\'s name'),
+      description: 'Enter the full name of the featured dancer',
+    }),
+    defineField({
       name: 'month',
       title: 'Which Month? 📅',
       type: 'string',
@@ -70,30 +78,56 @@ export default defineType({
       description: 'Enter the year for this feature (e.g., 2024)',
     }),
     defineField({
-      name: 'artist',
-      title: 'Who is the Featured Dancer? 💃',
-      type: 'reference',
-      fieldset: 'basics',
-      to: [{ type: 'artist' }],
-      validation: (Rule) => Rule.required().error('Please choose a dancer to feature'),
-      description: 'Select the dancer you want to highlight this month. If the dancer is not in the list, add them first in the Artists section.',
-    }),
-    defineField({
       name: 'slug',
       title: 'Website Link (Auto-Generated) 🔗',
       type: 'slug',
       fieldset: 'basics',
       options: {
-        source: (doc: any) => `${doc.artist?.name || 'dancer'}-${doc.month}-${doc.year}`.toLowerCase(),
+        source: (doc: any) => `${doc.dancerName || 'dancer'}-${doc.month}-${doc.year}`.toLowerCase(),
         maxLength: 96,
       },
       validation: (Rule) => Rule.required().error('Click "Generate" to create the website link'),
-      description: 'This creates the web address for this dancer feature page. Click "Generate" after selecting the dancer, month, and year.',
+      description: 'This creates the web address for this dancer feature page. Click "Generate" after entering the name, month, and year.',
+    }),
+    defineField({
+      name: 'socialLinks',
+      title: 'Social Media Links 📱',
+      type: 'array',
+      fieldset: 'basics',
+      of: [
+        {
+          type: 'object',
+          title: 'Social Link',
+          fields: [
+            {
+              name: 'platform',
+              title: 'Platform',
+              type: 'string',
+              options: {
+                list: [
+                  { title: '📷 Instagram', value: 'instagram' },
+                  { title: '📺 YouTube', value: 'youtube' },
+                  { title: '🎵 TikTok', value: 'tiktok' },
+                  { title: '🐦 Twitter', value: 'twitter' },
+                  { title: '🌐 Website', value: 'website' },
+                ],
+              },
+            },
+            {
+              name: 'url',
+              title: 'Link',
+              type: 'url',
+              description: 'Paste the full link (e.g., https://instagram.com/username)',
+            },
+          ],
+        },
+      ],
+      description: 'Add the dancer\'s social media links (optional)',
     }),
     defineField({
       name: 'featuredStory',
       title: 'Tell Their Story 📝',
-      type: 'internationalizedBlockContent',
+      type: 'blockContent',
       fieldset: 'content',
       validation: (Rule) => Rule.required().error('Please write the dancer\'s story'),
       description: 'Write the main article about this dancer. Include their background, journey, achievements, and what makes them special. This will be the main content visitors read.',
@@ -101,7 +135,7 @@ export default defineType({
     defineField({
       name: 'excerpt',
       title: 'Short Preview Text 💬',
-      type: 'internationalizedText',
+      type: 'text',
       fieldset: 'content',
       rows: 3,
       validation: (Rule) => Rule.required().max(300).error('Please write a short preview (under 300 characters)'),
@@ -193,7 +227,7 @@ export default defineType({
             {
               name: 'achievement',
               title: 'What did they achieve?',
-              type: 'internationalizedString',
+              type: 'string',
               description: 'E.g., "First Place at Caribbean Dance Competition"',
             },
             {
@@ -205,7 +239,7 @@ export default defineType({
             {
               name: 'description',
               title: 'Tell us more about it',
-              type: 'internationalizedText',
+              type: 'text',
               rows: 2,
               description: 'Add more details about this achievement - what made it special?',
             },
@@ -283,21 +317,22 @@ export default defineType({
     defineField({
       name: 'seoTitle',
       title: 'Search Engine Title (Optional) 🔍',
-      type: 'internationalizedString',
+      type: 'string',
       fieldset: 'seo',
       description: 'This is what appears in Google search results. If left blank, we\'ll use the dancer\'s name and month automatically.',
     }),
     defineField({
       name: 'seoDescription',
       title: 'Search Engine Description (Optional) 📝',
-      type: 'internationalizedText',
+      type: 'text',
+      rows: 2,
       fieldset: 'seo',
       description: 'This short description appears under the title in Google search results. Keep it under 160 characters and make it exciting to get more clicks! If left blank, we\'ll use the excerpt.',
     }),
   ],
   preview: {
     select: {
-      title: 'artist.name.en',
+      title: 'dancerName',
       subtitle: 'month',
       year: 'year',
       media: 'featuredImage',

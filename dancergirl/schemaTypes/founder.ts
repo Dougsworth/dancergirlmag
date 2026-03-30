@@ -8,26 +8,20 @@ export default defineType({
     defineField({
       name: 'name',
       title: 'Name',
-      type: 'internationalizedString',
+      type: 'string',
       validation: (Rule) => Rule.required(),
-      initialValue: {
-        en: 'Shanice Neita',
-        es: 'Shanice Neita'
-      }
+      initialValue: 'Shanice Neita',
     }),
     defineField({
       name: 'title',
       title: 'Title/Position',
-      type: 'internationalizedString',
-      initialValue: {
-        en: 'Founder & Editor-in-Chief',
-        es: 'Fundadora y Editora en Jefe'
-      }
+      type: 'string',
+      initialValue: 'Founder & Editor-in-Chief',
     }),
     defineField({
       name: 'bio',
       title: 'Biography',
-      type: 'internationalizedBlockContent',
+      type: 'blockContent',
       description: 'Tell the story of the founder - background, vision, achievements, etc.'
     }),
     defineField({
@@ -41,7 +35,8 @@ export default defineType({
     defineField({
       name: 'quote',
       title: 'Inspirational Quote',
-      type: 'internationalizedText',
+      type: 'text',
+      rows: 3,
       description: 'A meaningful quote from the founder about dance, culture, or the magazine'
     }),
     defineField({
@@ -55,7 +50,7 @@ export default defineType({
             {
               name: 'achievement',
               title: 'Achievement',
-              type: 'internationalizedString',
+              type: 'string',
             },
             {
               name: 'year',
@@ -65,7 +60,8 @@ export default defineType({
             {
               name: 'description',
               title: 'Description',
-              type: 'internationalizedText',
+              type: 'text',
+              rows: 2,
             }
           ]
         }
@@ -114,12 +110,12 @@ export default defineType({
             {
               name: 'institution',
               title: 'Institution/Company',
-              type: 'internationalizedString',
+              type: 'string',
             },
             {
               name: 'degree',
               title: 'Degree/Position',
-              type: 'internationalizedString',
+              type: 'string',
             },
             {
               name: 'year',
@@ -129,7 +125,8 @@ export default defineType({
             {
               name: 'description',
               title: 'Description',
-              type: 'internationalizedText',
+              type: 'text',
+              rows: 2,
             }
           ]
         }
@@ -138,7 +135,7 @@ export default defineType({
     defineField({
       name: 'vision',
       title: 'Vision Statement',
-      type: 'internationalizedBlockContent',
+      type: 'blockContent',
       description: 'The founder\'s vision for DancerGirl and Caribbean dance culture'
     }),
     defineField({
@@ -157,8 +154,8 @@ export default defineType({
   ],
   preview: {
     select: {
-      title: 'name.en',
-      subtitle: 'title.en',
+      title: 'name',
+      subtitle: 'title',
       media: 'image',
     },
   },

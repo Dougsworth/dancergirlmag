@@ -32,7 +32,7 @@ export default defineType({
     defineField({
       name: 'title',
       title: 'Letter Subject 💬',
-      type: 'internationalizedString',
+      type: 'string',
       fieldset: 'basics',
       validation: (Rule) => Rule.required(),
       description: 'Write a compelling subject line for your letter, like you would for an email to your readers.',
@@ -42,7 +42,7 @@ export default defineType({
       title: 'Website Link (Auto-Generated) 🔗',
       type: 'slug',
       fieldset: 'basics',
-      options: { source: 'title.en', maxLength: 96 },
+      options: { source: 'title', maxLength: 96 },
       validation: (Rule) => Rule.required(),
       description: 'This creates the web address for your letter. Click "Generate" after writing your subject line.',
     }),
@@ -57,7 +57,8 @@ export default defineType({
     defineField({
       name: 'excerpt',
       title: 'Letter Preview 📝',
-      type: 'internationalizedText',
+      type: 'text',
+      rows: 3,
       fieldset: 'basics',
       validation: (Rule) => Rule.required(),
       description: 'Write a short preview of what this letter is about. This helps readers decide if they want to read the full letter.',
@@ -65,7 +66,7 @@ export default defineType({
     defineField({
       name: 'content',
       title: 'Write Your Letter ✍️',
-      type: 'internationalizedBlockContent',
+      type: 'blockContent',
       fieldset: 'letterContent',
       validation: (Rule) => Rule.required(),
       description: 'Write your personal letter here! Share your thoughts, experiences, and connect with your readers. You can add photos too.',
@@ -141,7 +142,7 @@ export default defineType({
   ],
   preview: {
     select: {
-      title: 'title.en',
+      title: 'title',
       publishedAt: 'publishedAt',
       featured: 'featured',
     },

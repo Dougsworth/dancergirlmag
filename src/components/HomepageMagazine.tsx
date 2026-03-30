@@ -15,8 +15,9 @@ import { ArrowRight, ChevronLeft, ChevronRight, Music, MapPin, Clock } from "luc
 import { getFeaturedEditorLetter } from "@/lib/sanity/queries/editor-letters";
 import { getDancersOfMonth } from "@/lib/sanity/queries/dancers-of-month";
 import { getUpcomingEvents } from "@/lib/sanity/queries/events";
+import { getPlaylists } from "@/lib/sanity/queries/playlists";
 import { urlFor } from "@/lib/sanity";
-import type { SanityEditorLetter, SanityDancerOfTheMonth, SanityEvent } from "@/lib/sanity/types";
+import type { SanityEditorLetter, SanityDancerOfTheMonth, SanityEvent, SanityPlaylist } from "@/lib/sanity/types";
 import { format, parseISO } from "date-fns";
 
 // ─── helpers ─────────────────────────────────────────────────────────────────
@@ -372,64 +373,92 @@ function UpcomingEventsPanel({ events }: { events: SanityEvent[] }) {
 // Panel 4 — Music (warm gold)
 // ─────────────────────────────────────────────────────────────────────────────
 
-function MusicPanel() {
+function MusicPanel({ playlists }: { playlists: SanityPlaylist[] }) {
+  const displayPlaylists = playlists.slice(0, 4);
+
   return (
     <section
       className="py-16 md:py-20 border-t border-b border-border"
       style={{ background: "hsl(var(--caribbean-coral) / 0.08)" }}
     >
-      <div className="max-w-5xl mx-auto px-6">
-        <div className="flex flex-col md:flex-row items-center gap-10 md:gap-16">
+      <div className="max-w-6xl mx-auto px-6">
+        {/* Header */}
+        <motion.div {...fadeIn()} className="text-center mb-10">
+          <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground mb-3">
+            Curated for You
+          </p>
+          <h2 className="font-primary text-3xl md:text-4xl text-foreground mb-4">
+            Music
+          </h2>
+          <p className="text-base md:text-lg leading-relaxed text-foreground/70 font-body max-w-lg mx-auto">
+            Playlists rooted in Caribbean rhythm — from soca and dancehall to contemporary fusion.
+          </p>
+        </motion.div>
 
-          {/* Big decorative icon */}
-          <motion.div
-            {...fadeIn()}
-            className="flex-shrink-0"
-          >
+        {/* Playlist grid */}
+        {displayPlaylists.length > 0 ? (
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-5 mb-10">
+            {displayPlaylists.map((playlist, i) => {
+              const imgUrl = playlist.coverImage
+                ? urlFor(playlist.coverImage).width(400).height(400).url()
+                : null;
+              return (
+                <motion.a
+                  key={playlist._id}
+                  href={playlist.playlistUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  initial={{ opacity: 0, y: 16 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: i * 0.08 }}
+                  className="group block"
+                >
+                  <div className="relative aspect-square overflow-hidden rounded-xl bg-muted mb-3">
+                    {imgUrl ? (
+                      <img
+                        src={imgUrl}
+                        alt={playlist.title}
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      />
+                    ) : (
+                      <div
+                        className="w-full h-full flex items-center justify-center"
+                        style={{ background: "hsl(var(--caribbean-orange) / 0.15)" }}
+                      >
+                        <Music className="w-10 h-10" style={{ color: "hsl(var(--caribbean-orange) / 0.4)" }} />
+                      </div>
+                    )}
+                  </div>
+                  <p className="font-semibold text-foreground text-sm leading-tight group-hover:text-primary transition-colors line-clamp-2">
+                    {playlist.title}
+                  </p>
+                  <p className="text-xs text-muted-foreground mt-0.5 capitalize">
+                    {playlist.platform === 'apple' ? 'Apple Music' : playlist.platform}
+                  </p>
+                </motion.a>
+              );
+            })}
+          </div>
+        ) : (
+          <div className="flex justify-center mb-10">
             <div
-              className="w-28 h-28 md:w-36 md:h-36 rounded-full flex items-center justify-center"
+              className="w-28 h-28 rounded-full flex items-center justify-center"
               style={{ background: "hsl(var(--caribbean-orange) / 0.15)", border: "2px solid hsl(var(--caribbean-orange) / 0.25)" }}
             >
-              <Music
-                className="w-12 h-12 md:w-16 md:h-16"
-                style={{ color: "hsl(var(--caribbean-orange))" }}
-              />
+              <Music className="w-12 h-12" style={{ color: "hsl(var(--caribbean-orange))" }} />
             </div>
-          </motion.div>
+          </div>
+        )}
 
-          {/* Text */}
-          <motion.div {...fadeIn(0.1)} className="flex-1 text-center md:text-left">
-            <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground mb-3">
-              Curated for You
-            </p>
-            <h2 className="font-primary text-3xl md:text-4xl text-foreground mb-4">
-              Music
-            </h2>
-            <p className="text-base md:text-lg leading-relaxed text-foreground/70 font-body mb-6 max-w-lg">
-              Playlists rooted in Caribbean rhythm — from soca and dancehall to contemporary fusion. The soundtrack to your movement.
-            </p>
-            <Link
-              to="/music"
-              className="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.1em] text-foreground hover:text-primary hover:gap-3 transition-all duration-200"
-            >
-              Explore Music <ArrowRight className="w-4 h-4" />
-            </Link>
-          </motion.div>
-
-          {/* Decorative rule stack — visual interest */}
-          <motion.div
-            {...fadeIn(0.2)}
-            className="hidden lg:flex flex-col gap-2 flex-shrink-0"
+        {/* CTA */}
+        <div className="text-center">
+          <Link
+            to="/music"
+            className="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.1em] text-foreground hover:text-primary hover:gap-3 transition-all duration-200"
           >
-            {["hsl(var(--caribbean-orange))", "hsl(var(--caribbean-gold))", "hsl(var(--caribbean-coral))", "hsl(var(--caribbean-burgundy))"].map((c, i) => (
-              <div
-                key={i}
-                className="rounded-full"
-                style={{ width: 48 - i * 8, height: 4, background: c, opacity: 0.7 }}
-              />
-            ))}
-          </motion.div>
-
+            Explore Music <ArrowRight className="w-4 h-4" />
+          </Link>
         </div>
       </div>
     </section>
@@ -444,11 +473,13 @@ export default function HomepageMagazine() {
   const [editorLetter, setEditorLetter] = useState<SanityEditorLetter | null>(null);
   const [dancers, setDancers] = useState<SanityDancerOfTheMonth[]>([]);
   const [events, setEvents] = useState<SanityEvent[]>([]);
+  const [playlists, setPlaylists] = useState<SanityPlaylist[]>([]);
 
   useEffect(() => {
     getFeaturedEditorLetter().then(setEditorLetter).catch(() => {});
     getDancersOfMonth({ limit: 10 }).then(setDancers).catch(() => {});
     getUpcomingEvents(5).then(setEvents).catch(() => {});
+    getPlaylists().then(setPlaylists).catch(() => {});
   }, []);
 
   return (
@@ -456,7 +487,7 @@ export default function HomepageMagazine() {
       {editorLetter && <EditorLetterPanel letter={editorLetter} />}
       {dancers.length > 0 && <DomArchivePanel dancers={dancers} />}
       {events.length > 0 && <UpcomingEventsPanel events={events} />}
-      <MusicPanel />
+      <MusicPanel playlists={playlists} />
     </>
   );
 }

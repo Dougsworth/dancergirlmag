@@ -40,7 +40,7 @@ function CategorySpotlight({
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    getArticles({ limit: 1, category: categorySlug })
+    getArticles({ limit: 1, section: categorySlug })
       .then((data) => setArticle(data[0] ?? null))
       .catch(() => {})
       .finally(() => setLoading(false));
@@ -160,9 +160,9 @@ const LatestFromDancerGirl = () => {
     const fetchArticles = async () => {
       try {
         setLoading(true);
-        const excludeCategories = ["choreographers-corner", "dancer-speak-up"];
-        const featuredData = await getArticles({ limit: 3, featured: true, excludeCategories });
-        const recentData = await getArticles({ limit: 9, excludeCategories });
+        const excludeSections = ["choreographers-corner", "dancer-speak-up", "money-moves"];
+        const featuredData = await getArticles({ limit: 3, featured: true, excludeSections });
+        const recentData = await getArticles({ limit: 9, excludeSections });
 
         const featuredIds = new Set(featuredData.map((a: any) => a._id));
         const combined = [

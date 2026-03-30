@@ -65,8 +65,15 @@ export default defineType({
     defineField({
       name: 'category',
       title: 'Category',
-      type: 'reference',
-      to: [{ type: 'category' }],
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Music', value: 'music' },
+          { title: 'Dance', value: 'dance' },
+          { title: 'Interview', value: 'interview' },
+          { title: 'Behind the Scenes', value: 'behind-the-scenes' },
+        ],
+      },
     }),
     defineField({
       name: 'tags',
@@ -92,8 +99,8 @@ export default defineType({
     defineField({
       name: 'artist',
       title: 'Artist/Dancer',
-      type: 'reference',
-      to: [{ type: 'artist' }],
+      type: 'string',
+      description: 'Name of the artist or dancer in the video',
     }),
     defineField({
       name: 'difficulty',

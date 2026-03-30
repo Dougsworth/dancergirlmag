@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { getArticles, SanityArticle } from "@/lib/sanity";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, Sparkles, DollarSign } from "lucide-react";
+import { Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { PageLayout } from '@/components/PageLayout';
@@ -10,56 +10,29 @@ import StoryCard from '@/components/StoryCard';
 // Use the Article type from Sanity directly
 type Article = SanityArticle;
 
-// Fixed categories
-const fixedCategories = [
-  { id: "all", name: "All Stories", icon: Sparkles },
-  { id: "money-moves", name: "Money Moves", icon: DollarSign },
-];
-
 export default function Stories() {
   const [articles, setArticles] = useState<Article[]>([]);
   const [loading, setLoading] = useState(true);
-  const [selectedCategory, setSelectedCategory] = useState("all");
   const [searchTerm, setSearchTerm] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const categories = fixedCategories;
-  
+
   const articlesPerPage = 9;
-
-  // Keep categories fixed - don't change based on articles
-  // This ensures all 2 tabs are always visible
-
-  // No need for tab pagination with 2 fixed categories
 
   useEffect(() => {
     const fetchArticles = async () => {
       try {
         setLoading(true);
-        
-        // Map our fixed category IDs to Sanity category slugs
-        const categoryMapping: { [key: string]: string } = {
-          "money-moves": "money-moves"
-        };
-        
-        const sanityCategory = selectedCategory === "all" 
-          ? undefined 
-          : categoryMapping[selectedCategory] || selectedCategory;
 
-        // Exclude articles that have their own dedicated pages
-        const excludedCategories = selectedCategory === "all"
-          ? ["choreographers-corner", "dancer-speak-up"]
-          : undefined;
-
+        // Exclude sections that have their own dedicated pages
         const data = await getArticles({
           limit: 100,
-          category: sanityCategory,
-          excludeCategories: excludedCategories,
+          excludeSections: ["choreographers-corner", "dancer-speak-up", "money-moves"],
         });
         setArticles(data);
         setTotalPages(Math.ceil((data?.length || 0) / articlesPerPage));
-        setCurrentPage(1); // Reset to first page when category changes
+        setCurrentPage(1);
       } catch (err) {
         console.error("Error fetching articles:", err);
         setError("Failed to load articles. Please try again later.");
@@ -69,7 +42,7 @@ export default function Stories() {
     };
 
     fetchArticles();
-  }, [selectedCategory]);
+  }, []);
 
   const filteredArticles = articles
     .filter(article => {
@@ -192,29 +165,8 @@ export default function Stories() {
           </div>
         </motion.section>
         
-        {/* Tab Navigation with All Stories button */}
-        <motion.div
-          className="container mx-auto px-4 mb-12"
-          variants={filterVariants}
-        >
-          <div className="flex items-center justify-center gap-2">
-            {categories.map((category) => {
-              const Icon = category.icon;
-              return (
-                <Button
-                  key={category.id}
-                  onClick={() => setSelectedCategory(category.id)}
-                  variant={selectedCategory === category.id ? "default" : "outline"}
-                  size="default"
-                  className="rounded-full px-6 py-2 transition-all duration-300 hover:scale-105"
-                >
-                  <Icon className="w-4 h-4 mr-2" />
-                  {category.name}
-                </Button>
-              );
-            })}
-          </div>
-        </motion.div>
+        {/* Spacer after search */}
+        <div className="mb-12" />
 
         {/* Loading State */}
         {loading ? (
