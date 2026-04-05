@@ -1,7 +1,7 @@
 // src/lib/sanity/queries/dancers-of-month.ts
 // D.O.M Archive queries
 
-import { sanityFetch, getLocalizedContent, getCurrentLanguage } from '../client';
+import { sanityFetch } from '../client';
 import type { SanityDancerOfTheMonth } from '../types';
 
 // ==================== DANCERS OF THE MONTH ====================
@@ -25,16 +25,11 @@ export async function getDancersOfMonth(params?: {
   const query = `*[${filters.join(' && ')}] | order(year desc, month desc)[0...${limit}] {
     _id,
     _type,
+    dancerName,
     month,
     year,
     slug,
-    "artist": artist->{
-      _id,
-      name,
-      bio,
-      image,
-      socialLinks
-    },
+    socialLinks,
     featuredStory,
     excerpt,
     featuredImage,
@@ -52,25 +47,7 @@ export async function getDancersOfMonth(params?: {
   try {
     const dancers = await sanityFetch<SanityDancerOfTheMonth[]>(query);
     
-    // Transform internationalized fields
-    const lang = getCurrentLanguage();
-    return dancers.map(dancer => ({
-      ...dancer,
-      artist: {
-        ...dancer.artist,
-        name: getLocalizedContent(dancer.artist.name, lang) || dancer.artist.name,
-        bio: getLocalizedContent(dancer.artist.bio, lang) || dancer.artist.bio,
-      },
-      featuredStory: getLocalizedContent(dancer.featuredStory, lang) || dancer.featuredStory,
-      excerpt: getLocalizedContent(dancer.excerpt, lang) || dancer.excerpt,
-      seoTitle: getLocalizedContent(dancer.seoTitle, lang) || dancer.seoTitle,
-      seoDescription: getLocalizedContent(dancer.seoDescription, lang) || dancer.seoDescription,
-      achievements: dancer.achievements?.map(achievement => ({
-        ...achievement,
-        achievement: getLocalizedContent(achievement.achievement, lang) || achievement.achievement,
-        description: getLocalizedContent(achievement.description, lang) || achievement.description,
-      })) || [],
-    }));
+    return dancers;
   } catch (error) {
     console.error('Error fetching dancers of the month:', error);
     return [];
@@ -84,16 +61,11 @@ export async function getDancerOfMonthBySlug(slug: string): Promise<SanityDancer
   const query = `*[_type == "dancerOfTheMonth" && slug.current == $slug][0] {
     _id,
     _type,
+    dancerName,
     month,
     year,
     slug,
-    "artist": artist->{
-      _id,
-      name,
-      bio,
-      image,
-      socialLinks
-    },
+    socialLinks,
     featuredStory,
     excerpt,
     featuredImage,
@@ -110,29 +82,9 @@ export async function getDancerOfMonthBySlug(slug: string): Promise<SanityDancer
 
   try {
     const dancer = await sanityFetch<SanityDancerOfTheMonth>(query, { slug });
-    if (!dancer) return null;
-
-    // Transform internationalized fields
-    const lang = getCurrentLanguage();
-    return {
-      ...dancer,
-      artist: {
-        ...dancer.artist,
-        name: getLocalizedContent(dancer.artist.name, lang) || dancer.artist.name,
-        bio: getLocalizedContent(dancer.artist.bio, lang) || dancer.artist.bio,
-      },
-      featuredStory: getLocalizedContent(dancer.featuredStory, lang) || dancer.featuredStory,
-      excerpt: getLocalizedContent(dancer.excerpt, lang) || dancer.excerpt,
-      seoTitle: getLocalizedContent(dancer.seoTitle, lang) || dancer.seoTitle,
-      seoDescription: getLocalizedContent(dancer.seoDescription, lang) || dancer.seoDescription,
-      achievements: dancer.achievements?.map(achievement => ({
-        ...achievement,
-        achievement: getLocalizedContent(achievement.achievement, lang) || achievement.achievement,
-        description: getLocalizedContent(achievement.description, lang) || achievement.description,
-      })) || [],
-    };
+    return dancer || null;
   } catch (error) {
-    console.error('Error fetching dancer of the month:', error);
+    console.error('Error fetching dancer of the month by slug:', error);
     return null;
   }
 }
@@ -144,20 +96,15 @@ export async function getCurrentDancerOfMonth(): Promise<SanityDancerOfTheMonth 
   const now = new Date();
   const currentYear = now.getFullYear();
   const currentMonth = now.toLocaleString('default', { month: 'long' });
-  
+
   const query = `*[_type == "dancerOfTheMonth" && year == ${currentYear} && month == "${currentMonth}"][0] {
     _id,
     _type,
+    dancerName,
     month,
     year,
     slug,
-    "artist": artist->{
-      _id,
-      name,
-      bio,
-      image,
-      socialLinks
-    },
+    socialLinks,
     featuredStory,
     excerpt,
     featuredImage,
@@ -174,27 +121,7 @@ export async function getCurrentDancerOfMonth(): Promise<SanityDancerOfTheMonth 
 
   try {
     const dancer = await sanityFetch<SanityDancerOfTheMonth>(query);
-    if (!dancer) return null;
-
-    // Transform internationalized fields
-    const lang = getCurrentLanguage();
-    return {
-      ...dancer,
-      artist: {
-        ...dancer.artist,
-        name: getLocalizedContent(dancer.artist.name, lang) || dancer.artist.name,
-        bio: getLocalizedContent(dancer.artist.bio, lang) || dancer.artist.bio,
-      },
-      featuredStory: getLocalizedContent(dancer.featuredStory, lang) || dancer.featuredStory,
-      excerpt: getLocalizedContent(dancer.excerpt, lang) || dancer.excerpt,
-      seoTitle: getLocalizedContent(dancer.seoTitle, lang) || dancer.seoTitle,
-      seoDescription: getLocalizedContent(dancer.seoDescription, lang) || dancer.seoDescription,
-      achievements: dancer.achievements?.map(achievement => ({
-        ...achievement,
-        achievement: getLocalizedContent(achievement.achievement, lang) || achievement.achievement,
-        description: getLocalizedContent(achievement.description, lang) || achievement.description,
-      })) || [],
-    };
+    return dancer || null;
   } catch (error) {
     console.error('Error fetching current dancer of the month:', error);
     return null;

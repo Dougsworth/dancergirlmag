@@ -14,9 +14,6 @@ const Stories = lazy(() => import("@/pages/Stories"));
 const StoryDetail = lazy(() => import("@/pages/StoryDetail"));
 const ChoreographersCorner = lazy(() => import("@/pages/ChoreographersCorner"));
 const NotFound = lazy(() => import("@/pages/NotFound"));
-const DancerDetail = lazy(() => import("@/pages/DancerDetail"));
-const Dancers = lazy(() => import("@/pages/Dancers"));
-const Music = lazy(() => import("@/pages/Music"));
 const Events = lazy(() => import("@/pages/Events"));
 const EventDetail = lazy(() => import("@/pages/EventDetail"));
 const Newsletter = lazy(() => import("@/pages/Newsletter"));
@@ -57,9 +54,8 @@ function App() {
                   <Route path="/stories/:slug" element={<StoryDetail />} />
                   <Route path="/article/:slug" element={<StoryDetail />} />
                   <Route path="/choreographers-corner" element={<ChoreographersCorner />} />
-                  <Route path="/dancers" element={<Dancers />} />
-                  <Route path="/dancers/:slug" element={<DancerDetail />} />
-                  <Route path="/music" element={<Music />} />
+                  <Route path="/dancers" element={<DancersOfTheMonth />} />
+                  <Route path="/dancers/:slug" element={<DancerOfTheMonthDetail />} />
                   <Route path="/newsletter" element={<Newsletter />} />
                   <Route path="/newsletter/:slug" element={<EditorLetterDetail />} />
                   <Route path="/editor-letters" element={<EditorLetters />} />

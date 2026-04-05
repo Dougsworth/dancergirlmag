@@ -16,7 +16,10 @@ const CACHE_EXPIRY = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
 export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { i18n } = useTranslation();
   const [language, setLanguage] = useState(() => {
-    return localStorage.getItem('selectedLanguage') || i18n.language || 'en';
+    const stored = localStorage.getItem('selectedLanguage');
+    // Only allow en or es — anything else (from browser detection) falls back to en
+    if (stored === 'es') return 'es';
+    return 'en';
   });
   const [isTranslating, setIsTranslating] = useState(false);
   const [translatedElements, setTranslatedElements] = useState<WeakMap<Element, string>>(new WeakMap());
@@ -24,6 +27,8 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   const languageRef = useRef(language);
 
   const changeLanguage = useCallback(async (lang: string) => {
+    // Only English and Spanish are supported
+    if (lang !== 'en' && lang !== 'es') return;
     if (lang === language) return;
 
     // Update ref immediately so the MutationObserver won't re-translate
@@ -58,6 +63,9 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   };
 
   const translateText = useCallback(async (text: string, targetLang: string): Promise<string> => {
+    // Only translate to Spanish — guard against any other language leaking in
+    if (targetLang !== 'es') return text;
+
     // Check cache first
     const cacheKey = `${text}|${targetLang}`;
     const cached = translationCache.get(cacheKey);
@@ -177,7 +185,7 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   // Sync initial language with i18next
   useEffect(() => {
     if (i18n.isInitialized) {
-      const storedLang = localStorage.getItem('selectedLanguage') || 'en';
+      const storedLang = localStorage.getItem('selectedLanguage') === 'es' ? 'es' : 'en';
       if (storedLang !== i18n.language) {
         i18n.changeLanguage(storedLang);
       }

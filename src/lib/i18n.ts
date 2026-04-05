@@ -13,7 +13,6 @@ const resources = {
       'nav.events': 'Events',
       'nav.features': 'Features',
       'nav.tutorials': 'Tutorials',
-      'nav.music': 'Music',
       'nav.artists': 'Artists',
       'nav.community': 'Community',
       'nav.about': 'About',
@@ -123,7 +122,6 @@ const resources = {
       'nav.events': 'Eventos',
       'nav.features': 'Características',
       'nav.tutorials': 'Tutoriales',
-      'nav.music': 'Música',
       'nav.artists': 'Artistas',
       'nav.community': 'Comunidad',
       'nav.about': 'Acerca de',
@@ -231,17 +229,18 @@ i18n
   .use(initReactI18next)
   .init({
     resources,
+    supportedLngs: ['en', 'es'],
     fallbackLng: 'en',
     debug: false,
-    
+
     interpolation: {
-      escapeValue: false, // React already escapes values
+      escapeValue: false,
     },
-    
+
     detection: {
-      order: ['localStorage', 'navigator', 'htmlTag'],
+      order: ['localStorage'],
       caches: ['localStorage'],
-      lookupLocalStorage: 'i18nextLng',
+      lookupLocalStorage: 'selectedLanguage',
     },
   });
 

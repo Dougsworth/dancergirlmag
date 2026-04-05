@@ -39,7 +39,6 @@ const NavigationWithDropdowns = () => {
       path: "/stories",
       hasDropdown: true,
       subItems: [
-        { name: "All Stories", path: "/stories" },
         { name: "Money Moves", path: "/money-moves" },
         { name: "Choreographer's Corner", path: "/choreographers-corner" },
         { name: "Letters from the Editor", path: "/editor-letters" },
@@ -52,7 +51,6 @@ const NavigationWithDropdowns = () => {
       subItems: [
         { name: "D.O.M Archive", path: "/dancers-of-the-month" },
         { name: "Dancers: Speak Up!", path: "/dancers-speak-up" },
-        { name: "Music", path: "/music" },
       ]
     },
     {

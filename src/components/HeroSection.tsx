@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Link } from "react-router-dom";
+import { getActiveHero, type SanityHeroSection } from "@/lib/sanity/queries/hero";
 import { getCurrentDancerOfMonth } from "@/lib/sanity/queries/dancers-of-month";
 import { urlFor } from "@/lib/sanity";
 import type { SanityDancerOfTheMonth } from "@/lib/sanity/types";
@@ -9,28 +10,45 @@ const HeroSection = () => {
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, [0, 300], [0, 100]);
   const opacity = useTransform(scrollY, [0, 300], [1, 0.3]);
+  const [hero, setHero] = useState<SanityHeroSection | null>(null);
   const [dom, setDom] = useState<SanityDancerOfTheMonth | null>(null);
 
   useEffect(() => {
+    // Try CMS hero first, fall back to current dancer of the month
+    getActiveHero().then(setHero).catch(() => {});
     getCurrentDancerOfMonth().then(setDom).catch(() => {});
   }, []);
 
-  const dancerName = dom?.artist
-    ? (typeof dom.artist.name === "string" ? dom.artist.name : (dom.artist.name as any)?.en || "")
-    : "";
+  // Determine video source: CMS hero video > fallback static file
+  const heroVideoSrc = hero?.heroVideo?.url
+    || hero?.heroVideoUrl
+    || "/hero-video-compressed.mp4";
 
+  // Determine caption data: CMS hero > current D.O.M
+  const captionHeading = hero?.captionHeading || "Dancer of the Month";
+  const captionName = hero?.captionName || dom?.dancerName || "";
+  const captionLink = hero?.captionLinkResolved
+    || hero?.captionLinkUrl
+    || (dom?.slug?.current ? `/dancers-of-the-month/${dom.slug.current}` : "");
+  const captionButton = hero?.captionButtonText
+    || (captionName ? `Meet ${captionName.split(" ")[0]}` : "");
+
+  // Use D.O.M featured image as background if no video is configured
   const heroImageUrl = dom?.featuredImage
     ? urlFor(dom.featuredImage)?.width(1920).height(1080).url()
     : null;
 
+  // Show image background only when there's NO CMS hero (i.e. no managed video)
+  const useImageBackground = !hero && heroImageUrl;
+
   return (
     <section className="relative h-screen min-h-[600px] flex flex-col overflow-hidden bg-black w-full">
-      {/* Background — Dancer of Month image or hero video */}
+      {/* Background */}
       <motion.div className="absolute inset-0" style={{ y, opacity }}>
-        {heroImageUrl ? (
+        {useImageBackground ? (
           <img
-            src={heroImageUrl}
-            alt={dancerName}
+            src={heroImageUrl!}
+            alt={captionName}
             className="w-full h-full object-cover"
           />
         ) : (
@@ -41,11 +59,10 @@ const HeroSection = () => {
             loop
             playsInline
             preload="auto"
-            src="/hero-video-compressed.mp4"
+            src={heroVideoSrc}
           />
         )}
 
-        {/* Overlays for readability */}
         <div className="absolute inset-0 bg-black/30" />
         <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/60" />
       </motion.div>
@@ -77,7 +94,7 @@ const HeroSection = () => {
         </motion.div>
       </div>
 
-      {/* Dancer of the Month overlay */}
+      {/* Caption overlay */}
       <motion.div
         className="absolute bottom-16 sm:bottom-24 left-0 right-0 z-20 px-4 sm:px-8"
         initial={{ opacity: 0, y: 20 }}
@@ -85,21 +102,21 @@ const HeroSection = () => {
         transition={{ delay: 1, duration: 0.8 }}
       >
         <div className="container mx-auto max-w-4xl">
-          {dom && dancerName ? (
+          {captionName ? (
             <div className="flex items-end justify-between">
               <div className="bg-black/50 backdrop-blur-sm rounded-2xl p-4 sm:p-5 border border-white/10 max-w-xs">
                 <div className="text-xs uppercase tracking-widest text-primary font-semibold mb-1">
-                  Dancer of the Month
+                  {captionHeading}
                 </div>
                 <h2 className="text-xl sm:text-2xl font-bold text-white mb-3 drop-shadow-lg">
-                  {dancerName}
+                  {captionName}
                 </h2>
-                {dom.slug?.current && (
+                {captionLink && (
                   <Link
-                    to={`/dancers-of-the-month/${dom.slug.current}`}
+                    to={captionLink}
                     className="inline-flex items-center gap-2 bg-primary text-white text-sm font-medium px-4 py-2 rounded-full hover:bg-primary/90 transition-colors"
                   >
-                    Meet {dancerName.split(" ")[0]}
+                    {captionButton}
                   </Link>
                 )}
               </div>

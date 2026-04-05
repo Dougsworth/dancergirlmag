@@ -162,54 +162,6 @@ export interface SanityEditorLetter {
   author?: SanityFounder;
 }
 
-// ==================== LEGACY TYPES (schemas removed, kept for existing data) ====================
-
-export interface SanityArtist {
-  _id: string;
-  _type: 'artist';
-  name: string | Record<string, string>;
-  slug: SanitySlug;
-  bio?: string | Record<string, string>;
-  profileImage?: SanityImage;
-  image?: SanityImage;
-  socialLinks?: Array<{
-    platform: string;
-    url: string;
-  }>;
-  isFeatured?: boolean;
-  achievements?: Array<{
-    achievement: string;
-    year: number;
-    description?: string;
-  }>;
-}
-
-export interface SanityChoreographer {
-  _id: string;
-  _type: 'choreographer';
-  name: string;
-  slug: SanitySlug;
-  bio?: string;
-  profileImage?: SanityImage;
-  specialties?: string[];
-  featuredWork?: Array<{
-    title?: string;
-    description?: string;
-    videoUrl?: string;
-    image?: SanityImage;
-    year?: number;
-  }>;
-  socialLinks?: {
-    instagram?: string;
-    youtube?: string;
-    tiktok?: string;
-    website?: string;
-  };
-  featured?: boolean;
-  order?: number;
-  publishedAt?: string;
-}
-
 export interface SanityFeaturedStory {
   _id: string;
   _type: 'featuredStory';
@@ -225,20 +177,6 @@ export interface SanityFeaturedStory {
   order?: number;
 }
 
-// ==================== PLAYLIST ====================
-
-export interface SanityPlaylist {
-  _id: string;
-  _type: 'playlist';
-  title: string;
-  slug: SanitySlug;
-  platform: 'spotify' | 'apple' | 'youtube';
-  playlistUrl: string;
-  coverImage?: SanityImage;
-  description?: string;
-  tags?: string[];
-}
-
 // ==================== QUERY PARAMETERS ====================
 
 export interface ArticleQueryParams {
@@ -246,16 +184,6 @@ export interface ArticleQueryParams {
   section?: string;
   featured?: boolean;
   excludeSections?: string[];
-}
-
-export interface ArtistQueryParams {
-  limit?: number;
-  featured?: boolean;
-}
-
-export interface ChoreographerQueryParams {
-  limit?: number;
-  featured?: boolean;
 }
 
 export interface EventQueryParams {

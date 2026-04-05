@@ -75,7 +75,7 @@ export default function DancersSpeakUp() {
               <Play className="w-8 h-8 text-accent ml-1" />
             </div>
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-secondary font-bold text-foreground mb-4">
-              Dancers: Speak Up!
+              Dancer: Speak Up!
             </h1>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               Caribbean dancers share their stories — conversations about dance advocacy, education, and

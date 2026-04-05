@@ -102,26 +102,18 @@ export const structure = (S: StructureBuilder) =>
 
       // MEDIA
       S.listItem()
-        .title('Music & Media')
+        .title('Videos')
         .icon(PlayIcon)
-        .child(
-          S.list()
-            .title('Music & Media')
-            .items([
-              S.listItem()
-                .title('Videos')
-                .icon(PlayIcon)
-                .child(S.documentTypeList('video').title('All Videos')),
-              S.listItem()
-                .title('Playlists')
-                .icon(PlayIcon)
-                .child(S.documentTypeList('playlist').title('All Playlists')),
-            ])
-        ),
+        .child(S.documentTypeList('video').title('All Videos')),
 
       S.divider(),
 
       // SITE SETTINGS
+      S.listItem()
+        .title('Homepage Hero')
+        .icon(SparklesIcon)
+        .child(S.documentTypeList('heroSection').title('Hero Video & Caption')),
+
       S.listItem()
         .title('About / Founder')
         .icon(UserIcon)
@@ -134,7 +126,7 @@ export const structure = (S: StructureBuilder) =>
         .child(
           S.documentList()
             .title('Recently Updated')
-            .filter('_type in ["article", "dancerOfTheMonth", "editorLetter", "event", "video", "playlist"]')
+            .filter('_type in ["article", "dancerOfTheMonth", "editorLetter", "event", "video"]')
             .defaultOrdering([{field: '_updatedAt', direction: 'desc'}])
         ),
     ])

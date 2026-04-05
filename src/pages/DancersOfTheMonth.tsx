@@ -172,9 +172,7 @@ const DancersOfTheMonth = () => {
         <div className="container mx-auto px-4 pb-20">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
             {paginatedDancers.map((dancer, index) => {
-              const artistName = typeof dancer.artist.name === 'string' 
-                ? dancer.artist.name 
-                : (dancer.artist.name as any)?.en || 'Unknown Dancer';
+              const artistName = dancer.dancerName || 'Unknown Dancer';
               const excerpt = typeof dancer.excerpt === 'string' 
                 ? dancer.excerpt 
                 : (dancer.excerpt as any)?.en || 'No description available.';

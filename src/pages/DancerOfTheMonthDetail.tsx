@@ -115,7 +115,7 @@ export default function DancerOfTheMonthDetail() {
               </div>
               
               <h1 className="text-4xl md:text-5xl font-primary font-bold mb-4">
-                {typeof dancer.artist.name === 'string' ? dancer.artist.name : (dancer.artist.name as any)?.en || 'Unknown Dancer'}
+                {dancer.dancerName || 'Unknown Dancer'}
               </h1>
               
               <p className="text-xl text-muted-foreground max-w-2xl mx-auto font-body leading-relaxed">
@@ -132,7 +132,7 @@ export default function DancerOfTheMonthDetail() {
             <div className="relative w-full rounded-lg overflow-hidden bg-gray-50">
               <OptimizedImage
                 image={dancer.featuredImage}
-                alt={typeof dancer.artist.name === 'string' ? dancer.artist.name : dancer.artist.name?.en || 'Dancer'}
+                alt={dancer.dancerName || 'Dancer'}
                 width={1200}
                 quality={100}
                 objectFit="contain"
@@ -153,45 +153,23 @@ export default function DancerOfTheMonthDetail() {
               </div>
             )}
 
-            {/* Main Content - Combined Story and Artist Bio */}
-            <div className="prose prose-lg max-w-none font-body">
-              {/* About Section with image */}
-              {dancer.artist.bio && (
-                <>
-                  <h2 className="font-secondary mb-6">About {typeof dancer.artist.name === 'string' ? dancer.artist.name : (dancer.artist.name as any)?.en || 'the Artist'}</h2>
-                  <div className="flex flex-col sm:flex-row gap-6 items-start mb-8">
-                    <div className="w-full sm:w-48 h-48 rounded-lg overflow-hidden flex-shrink-0">
-                      <HDImage
-                        image={dancer.artist.image}
-                        alt={typeof dancer.artist.name === 'string' ? dancer.artist.name : (dancer.artist.name as any)?.en || 'Artist'}
-                        preset="profile"
-                        className="w-full h-full"
-                      />
-                    </div>
-                    <div className="flex-1">
-                      <PortableText value={dancer.artist.bio} />
-                    </div>
-                  </div>
-                </>
-              )}
-              
-              {/* Featured Story - continues seamlessly from bio */}
-              {dancer.featuredStory && (
-                <div className="space-y-4">
-                  <PortableText value={dancer.featuredStory} />
-                </div>
-              )}
-            </div>
+            {/* Featured Story */}
+            {dancer.featuredStory && (
+              <div className="prose prose-lg max-w-none font-body">
+                <h2 className="font-secondary mb-6">About {dancer.dancerName || 'the Dancer'}</h2>
+                <PortableText value={dancer.featuredStory} />
+              </div>
+            )}
 
             {/* Social Links */}
-            {dancer.artist.socialLinks && dancer.artist.socialLinks.length > 0 && (
+            {dancer.socialLinks && dancer.socialLinks.length > 0 && (
               <Card className="mt-8">
                 <CardHeader>
-                  <CardTitle className="font-secondary text-lg">Connect with {typeof dancer.artist.name === 'string' ? dancer.artist.name.split(' ')[0] : (dancer.artist.name as any)?.en?.split(' ')[0] || 'Artist'}</CardTitle>
+                  <CardTitle className="font-secondary text-lg">Connect with {(dancer.dancerName || 'Artist').split(' ')[0]}</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="flex flex-wrap gap-2">
-                    {dancer.artist.socialLinks.map((link, index) => (
+                    {dancer.socialLinks.map((link, index) => (
                       <Button key={index} variant="outline" size="sm" asChild className="font-body">
                         <a href={link.url} target="_blank" rel="noopener noreferrer">
                           <span className="mr-1">{getSocialIcon(link.platform)}</span>

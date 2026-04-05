@@ -7,10 +7,3 @@ export * from './types';
 export * from './queries';
 export * from './utils';
 
-// Re-export everything for backward compatibility
-export * from './queries/articles';
-export * from './queries/artists';
-export * from './queries/choreographers';
-export * from './queries/events';
-export * from './queries/featured-stories';
-export * from './queries/dancers-of-month';

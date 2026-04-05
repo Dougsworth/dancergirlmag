@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Calendar, Clock, MapPin, Users, Star, Award, Music, Video } from "lucide-react";
+import { Calendar, Clock, MapPin, Users, Star, Award, Video } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { getFeaturedArticles, SanityArticle } from "@/lib/sanity";
@@ -50,10 +50,10 @@ const features: FeatureCardProps[] = [
     color: "text-green-500"
   },
   {
-    title: "Global Rhythms",
-    description: "Caribbean music's international influence",
-    icon: <Music className="h-8 w-8" />,
-    link: "/music",
+    title: "Dancer of the Month",
+    description: "Monthly spotlight on outstanding Caribbean dancers",
+    icon: <Star className="h-8 w-8" />,
+    link: "/dancers-of-the-month",
     bgImage: "/images/IMG_0951.jpg",
     color: "text-yellow-500"
   },
@@ -150,12 +150,12 @@ export default function Features() {
         {/* Featured Stories Section */}
         <div className="max-w-6xl mx-auto">
           <div className="flex justify-between items-center mb-8">
-            <h2 className="text-3xl md:text-4xl font-secondary text-foreground">Featured Stories</h2>
+            <h2 className="text-3xl md:text-4xl font-secondary text-foreground">Featured Articles</h2>
             <Link
               to="/stories"
               className="text-primary hover:text-primary/80 flex items-center text-sm font-medium transition-colors"
             >
-              View All Stories
+              Browse Stories
               <svg
                 className="w-4 h-4 ml-1"
                 fill="none"
@@ -222,9 +222,11 @@ export default function Features() {
                     )}
                   </div>
                   <div className="p-6">
-                    <div className="flex items-center text-sm text-primary mb-3">
-                      <span>{story.categories?.[0]?.title || 'Uncategorized'}</span>
-                    </div>
+                    {story.section && (
+                      <div className="flex items-center text-sm text-primary mb-3">
+                        <span>{story.section.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase())}</span>
+                      </div>
+                    )}
                     <h3 className="text-xl font-bold text-foreground mb-2 line-clamp-2">
                       {story.title}
                     </h3>
@@ -237,11 +239,11 @@ export default function Features() {
                       <div className="flex items-center">
                         <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center mr-3">
                           <span className="text-primary text-xs font-medium">
-                            {getInitials(story.author?.name || 'DG')}
+                            {getInitials(story.author || 'DG')}
                           </span>
                         </div>
                         <div>
-                          <p className="text-sm text-foreground">{story.author?.name || 'DancerGirl'}</p>
+                          <p className="text-sm text-foreground">{story.author || 'DancerGirl'}</p>
                         </div>
                       </div>
                       <Link

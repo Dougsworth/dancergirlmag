@@ -21,14 +21,10 @@ const Header = () => {
     { name: "Stories", path: "/stories" },
     { name: "Events", path: "/events" },
     { name: "Features", path: "/features" },
-    { name: "Music", path: "/music" },
     { name: "Choreographers Corner", path: "/choreographers-corner" },
     { name: "About", path: "/about" },
   ];
 
-  const storiesSubItems = [
-    { name: "All Stories", path: "/stories" },
-  ];
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 10);

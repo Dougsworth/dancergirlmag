@@ -1,0 +1,263 @@
+DancerGirl Magazine — How This Site Works
+==========================================
+
+Last updated: April 2026
+
+
+TECH STACK
+----------
+- Frontend: React 18 + TypeScript + Vite
+- Styling: Tailwind CSS + shadcn/ui components (in src/components/ui/)
+- Animations: Framer Motion
+- Routing: React Router v6 (BrowserRouter)
+- CMS: Sanity (headless CMS, hosted at sanity.io)
+- i18n: i18next (English/Spanish only)
+- Build: Vite (dev server + production builds)
+
+
+PROJECT STRUCTURE
+-----------------
+/
+├── dancergirl/                  ← Sanity Studio (CMS config)
+│   ├── sanity.config.ts         ← Studio config
+│   ├── sanity.cli.ts            ← CLI config
+│   ├── structure.ts             ← Studio sidebar navigation
+│   └── schemaTypes/             ← Content schemas
+│       ├── index.ts             ← Schema registry (add new schemas here)
+│       ├── article.ts           ← Articles & Stories
+│       ├── dancerOfTheMonth.ts  ← Dancer of the Month features
+│       ├── editorLetter.ts      ← Letters from the Editor
+│       ├── event.ts             ← Events & Workshops
+│       ├── video.ts             ← Videos
+│       ├── founder.ts           ← About page / founder info
+│       ├── heroSection.ts       ← Homepage hero video & caption (NEW)
+│       ├── blockContent.ts      ← Rich text editor config
+│       └── customBlocks.ts      ← Custom block types
+│
+├── src/                         ← React frontend
+│   ├── App.tsx                  ← Router + top-level providers
+│   ├── main.tsx                 ← Entry point
+│   │
+│   ├── components/
+│   │   ├── Header.tsx           ← Main navigation bar (fixed top)
+│   │   ├── Footer.tsx           ← Site footer
+│   │   ├── HeroSection.tsx      ← Homepage hero (video + caption)
+│   │   ├── PageLayout.tsx       ← Shared page wrapper (header + footer)
+│   │   ├── StandardLayout.tsx   ← Alternative layout variant
+│   │   ├── StoryCard.tsx        ← Article card used on listing pages
+│   │   ├── SanityImage.tsx      ← Optimized Sanity image component
+│   │   ├── OptimizedImage.tsx   ← Image with lazy loading + srcset
+│   │   ├── HomepageMagazine.tsx ← Homepage magazine-style section
+│   │   ├── LanguageToggle.tsx   ← EN/ES language switcher button
+│   │   ├── ThemeToggle.tsx      ← Light/dark mode toggle
+│   │   ├── AdSpace.tsx          ← Ad placeholder (not yet connected)
+│   │   ├── NavigationWithDropdowns.tsx ← Nav with dropdown submenus
+│   │   └── ui/                  ← shadcn/ui primitives (button, card, etc.)
+│   │
+│   ├── pages/
+│   │   ├── Index.tsx            ← Homepage (/ route)
+│   │   ├── Stories.tsx          ← All articles listing
+│   │   ├── StoryDetail.tsx      ← Single article page
+│   │   ├── DancersOfTheMonth.tsx ← D.O.M archive listing
+│   │   ├── DancerOfTheMonthDetail.tsx ← Single D.O.M feature
+│   │   ├── Events.tsx           ← Events listing
+│   │   ├── EventDetail.tsx      ← Single event
+│   │   ├── EditorLetters.tsx    ← Editor letters listing
+│   │   ├── EditorLetterDetail.tsx ← Single letter
+│   │   ├── ChoreographersCorner.tsx ← Choreographer articles
+│   │   ├── DancerSpeakUp.tsx    ← Dancer: Speak Up section
+│   │   ├── DancersSpeakUp.tsx   ← Alternate route for above
+│   │   ├── MoneyMoves.tsx       ← Money Moves articles
+│   │   ├── Watch.tsx            ← Video content page
+│   │   ├── Features.tsx         ← Features page (featured articles)
+│   │   ├── About.tsx            ← About page (pulls founder data)
+│   │   ├── Newsletter.tsx       ← Newsletter page
+│   │   └── NotFound.tsx         ← 404 page
+│   │
+│   ├── lib/
+│   │   ├── sanity.ts            ← Main Sanity export (re-exports everything)
+│   │   ├── sanity/
+│   │   │   ├── client.ts        ← Sanity client setup + urlFor + sanityFetch
+│   │   │   ├── types.ts         ← TypeScript interfaces for all content
+│   │   │   ├── utils.ts         ← Read time calc, date formatting
+│   │   │   └── queries/
+│   │   │       ├── index.ts     ← Re-exports all query modules
+│   │   │       ├── articles.ts  ← Article GROQ queries
+│   │   │       ├── dancers-of-month.ts ← D.O.M queries
+│   │   │       ├── events.ts    ← Event queries
+│   │   │       ├── editor-letters.ts ← Editor letter queries
+│   │   │       ├── founder.ts   ← Founder/about queries
+│   │   │       ├── hero.ts      ← Hero section query (NEW)
+│   │   │       └── featured-stories.ts ← Legacy fallback for StoryDetail
+│   │   │
+│   │   ├── i18n.ts              ← i18next config + all EN/ES translations
+│   │   ├── utils.ts             ← cn() classname utility
+│   │   └── portableText.tsx     ← Portable text renderer
+│   │
+│   ├── contexts/
+│   │   ├── LanguageContext.tsx   ← Language state + DOM translation
+│   │   └── ThemeContext.tsx      ← Dark/light mode state
+│   │
+│   └── hooks/
+│       ├── useSanityImage.ts    ← Image optimization hook
+│       ├── useLanguageRefresh.ts ← Re-translate on navigation
+│       └── use-mobile.tsx       ← Mobile breakpoint detection
+│
+├── public/                      ← Static assets
+│   ├── hero-video-compressed.mp4 ← Default hero video (fallback)
+│   ├── Dancer Girl Logo Digital Black.png ← Main logo
+│   └── DG Monogram Letters ONLY Digital Black.png ← Monogram logo
+│
+├── scripts/                     ← Data import scripts (one-time use)
+└── notes/                       ← This file + other notes
+
+
+HOW SANITY DATA GETS TO REACT
+-------------------------------
+1. Content is created/edited in Sanity Studio (run: cd dancergirl && npx sanity dev)
+2. Sanity stores it in the cloud (project ID: f37vktt0, dataset: production)
+3. React queries Sanity via GROQ queries in src/lib/sanity/queries/*.ts
+4. The sanityFetch() function (in client.ts) calls the Sanity API
+5. Data comes back as JSON and is rendered by React components
+6. Images go through urlFor() which generates optimized Sanity CDN URLs
+
+Flow: Sanity Studio → Sanity Cloud → GROQ Query → sanityFetch() → React State → Component
+
+
+HOW ROUTING WORKS
+-----------------
+All routes are defined in src/App.tsx using React Router v6.
+Pages are lazy-loaded (only downloaded when visited).
+Every page is wrapped in <PageLayout> which adds the header + footer.
+
+Key routes:
+  /                          → Homepage (Index.tsx)
+  /stories                   → All articles
+  /stories/:slug             → Single article
+  /dancers-of-the-month      → D.O.M archive
+  /dancers-of-the-month/:slug → Single dancer feature
+  /events                    → Events listing
+  /events/:slug              → Single event
+  /editor-letters            → Editor letters listing
+  /editor-letters/:slug      → Single letter
+  /choreographers-corner     → Choreographer articles
+  /dancer-speak-up           → Dancer: Speak Up articles
+  /money-moves               → Money Moves articles
+  /watch                     → Video page
+  /about                     → About page
+
+
+ARTICLE SECTIONS
+----------------
+Articles use a "section" field (not categories) to organize content:
+  - money-moves             → /money-moves
+  - choreographers-corner   → /choreographers-corner
+  - dancer-speak-up         → /dancer-speak-up
+  - general                 → /stories
+
+
+WHERE THE HEADER IS
+-------------------
+File: src/components/Header.tsx
+
+- Fixed position at top (z-50)
+- Logo: DG Monogram image
+- Nav items: Home, Watch, Stories, Events, Features, Choreographers Corner, About
+- Has: search button, language toggle (EN/ES), theme toggle (light/dark)
+- Mobile: hamburger menu that slides out
+- Background becomes more opaque on scroll
+
+
+HERO SECTION (HOMEPAGE)
+-----------------------
+File: src/components/HeroSection.tsx
+Schema: dancergirl/schemaTypes/heroSection.ts
+Query: src/lib/sanity/queries/hero.ts
+
+Priority order:
+1. If a "Hero Section" document exists in Sanity with isActive=true → use its video + caption
+2. If no hero doc → fall back to current Dancer of the Month image
+3. If no D.O.M → play /public/hero-video-compressed.mp4
+
+To change the hero:
+  - Go to Sanity Studio → "Homepage Hero"
+  - Create or edit a hero section document
+  - Upload a video (or paste video URL)
+  - Set the dancer's name (caption)
+  - Link it to their Dancer of the Month feature page
+  - Toggle "Make This the Active Hero" ON
+
+
+TRANSLATION (EN/ES)
+--------------------
+Config: src/lib/i18n.ts (hardcoded translation strings for UI)
+Context: src/contexts/LanguageContext.tsx (runtime DOM translation for CMS content)
+
+How it works:
+- UI text (nav, buttons, labels) uses i18next with hardcoded EN/ES strings
+- CMS content (article text, dancer stories) is translated at runtime via
+  MyMemory API → Google Translate fallback when user switches to ES
+- Only English and Spanish are supported. Browser language detection is disabled.
+- Language preference is stored in localStorage key: "selectedLanguage"
+
+Toggle: src/components/LanguageToggle.tsx (shows EN or ES button in header)
+
+
+HOW TO MAKE COMMON EDITS
+-------------------------
+
+Add a new nav item:
+  → Edit navItems array in src/components/Header.tsx (line ~18)
+  → Add a new route in src/App.tsx
+  → Create the page component in src/pages/
+
+Add a new article section:
+  → Add option to the section field in dancergirl/schemaTypes/article.ts (line ~94)
+  → Add filter in dancergirl/structure.ts for the Studio sidebar
+  → Create a new page in src/pages/ that filters by section
+  → Add route in src/App.tsx
+
+Change the homepage hero:
+  → Sanity Studio → Homepage Hero → edit or create new
+
+Add a new content type:
+  → Create schema in dancergirl/schemaTypes/
+  → Import + add to schemaTypes array in dancergirl/schemaTypes/index.ts
+  → Add to Studio sidebar in dancergirl/structure.ts
+  → Create query file in src/lib/sanity/queries/
+  → Export from src/lib/sanity/queries/index.ts
+  → Create TypeScript interface in src/lib/sanity/types.ts
+  → Create page component + route
+
+Change styling:
+  → Global styles: src/index.css + tailwind.config.ts
+  → Component-level: Tailwind classes directly in component files
+  → Theme colors: defined in tailwind.config.ts or CSS custom properties
+
+Change the logo:
+  → Replace files in /public/ (keep same filenames)
+  → Or update paths in Header.tsx and HeroSection.tsx
+
+
+SANITY STUDIO
+-------------
+Location: /dancergirl/
+Run locally: cd dancergirl && npx sanity dev
+Deploy: npx sanity deploy (from dancergirl/ directory)
+
+Content structure in Studio sidebar (defined in dancergirl/structure.ts):
+  - Stories & Articles (with sub-filters for sections)
+  - Dancer of the Month (current + archive)
+  - Letters from the Editor
+  - Events
+  - Videos
+  - Homepage Hero (NEW — video + caption manager)
+  - About / Founder
+  - Recent Activity
+
+
+ENV VARIABLES
+-------------
+VITE_SANITY_PROJECT_ID=f37vktt0
+VITE_SANITY_DATASET=production
+(These have hardcoded fallbacks so .env is optional for dev)
