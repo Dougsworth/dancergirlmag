@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Calendar, Eye, ArrowRight, Music, Trophy, Play } from "lucide-react";
 import { Link } from "react-router-dom";
 import PageLayout from "@/components/PageLayout";
-import { getDancersOfTheMonth, urlFor, type SanityDancerOfTheMonth } from "@/lib/sanity";
+import { getDancersOfMonth, urlFor, type SanityDancerOfTheMonth } from "@/lib/sanity";
 
 const DancersOfTheMonth = () => {
   const [dancers, setDancers] = useState<SanityDancerOfTheMonth[]>([]);
@@ -21,7 +21,7 @@ const DancersOfTheMonth = () => {
     const fetchDancers = async () => {
       try {
         setLoading(true);
-        const data = await getDancersOfTheMonth({ limit: 50 });
+        const data = await getDancersOfMonth({ limit: 50 });
         setDancers(data);
         setTotalPages(Math.ceil((data?.length || 0) / dancersPerPage));
       } catch (err) {
