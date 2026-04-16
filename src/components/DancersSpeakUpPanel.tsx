@@ -21,7 +21,7 @@ export default function DancersSpeakUpPanel() {
 
   useEffect(() => {
     sanityFetch<any[]>(
-      `*[_type == "video" && defined(youtubeUrl)] | order(publishedAt desc) [0...4] { _id, title, youtubeUrl, thumbnail, description }`
+      `*[_type == "video" && defined(videoUrl)] | order(publishedAt desc) [0...4] { _id, title, videoUrl, thumbnail, description }`
     )
       .then((data) => setVideos(data ?? []))
       .catch(() => {})
@@ -64,13 +64,13 @@ export default function DancersSpeakUpPanel() {
             {videos.map((video, i) => {
               const thumb = video.thumbnail
                 ? urlFor(video.thumbnail).width(600).height(400).url()
-                : getYouTubeThumbnail(video.youtubeUrl ?? "");
+                : getYouTubeThumbnail(video.videoUrl ?? "");
               const title = str(video.title);
               const desc = str(video.description);
               return (
                 <motion.a
                   key={video._id}
-                  href={video.youtubeUrl}
+                  href={video.videoUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   initial={{ opacity: 0, y: 16 }}

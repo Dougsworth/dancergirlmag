@@ -8,7 +8,7 @@ import { urlFor } from "@/lib/sanity";
 interface SpeakaUpVideo {
   _id: string;
   title: string;
-  youtubeUrl: string;
+  videoUrl: string;
   thumbnail?: any;
   description?: string;
   publishedAt?: string;
@@ -19,10 +19,10 @@ export default function DancersSpeakUp() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const query = `*[_type == "video" && defined(youtubeUrl)] | order(publishedAt desc) [0...24] {
+    const query = `*[_type == "video" && defined(videoUrl)] | order(publishedAt desc) [0...24] {
       _id,
       title,
-      youtubeUrl,
+      videoUrl,
       thumbnail,
       description,
       publishedAt
@@ -119,7 +119,7 @@ export default function DancersSpeakUp() {
               {videos.map((video) => {
                 const thumbnail = video.thumbnail
                   ? urlFor(video.thumbnail).width(640).height(360).url()
-                  : getYouTubeThumbnail(video.youtubeUrl);
+                  : getYouTubeThumbnail(video.videoUrl);
                 const title = typeof video.title === "string" ? video.title : (video.title as any)?.en || "Video";
                 const description = typeof video.description === "string"
                   ? video.description
@@ -131,7 +131,7 @@ export default function DancersSpeakUp() {
                     variants={itemVariants}
                     className="group bg-card rounded-2xl overflow-hidden border border-border/50 hover:border-primary/30 hover:shadow-lg transition-all duration-300"
                   >
-                    <a href={video.youtubeUrl} target="_blank" rel="noopener noreferrer">
+                    <a href={video.videoUrl} target="_blank" rel="noopener noreferrer">
                       <div className="relative aspect-video bg-black overflow-hidden">
                         {thumbnail ? (
                           <img
