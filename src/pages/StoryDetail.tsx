@@ -4,7 +4,7 @@ import { format } from "date-fns";
 import { getArticle, getFeaturedStoryBySlug, urlFor, getLocalizedContent } from "@/lib/sanity";
 import { PageLayout } from '@/components/PageLayout';
 import { ArrowLeft } from "lucide-react";
-import { PortableText } from '@portabletext/react';
+import { PortableText } from '@/lib/portableText';
 
 interface Article {
   _id: string;
@@ -201,50 +201,18 @@ export default function StoryDetail() {
             )}
 
             {/* Article Content */}
-            <div className="prose prose-xl dark:prose-invert max-w-none prose-headings:font-bold prose-headings:text-foreground prose-headings:tracking-tight prose-p:text-foreground prose-p:leading-relaxed prose-p:text-lg prose-a:text-primary hover:prose-a:text-primary/80 prose-strong:text-foreground prose-blockquote:border-l-4 prose-blockquote:border-primary/30 prose-blockquote:bg-muted/10 prose-blockquote:p-6 prose-blockquote:my-8 prose-blockquote:not-italic prose-li:text-foreground prose-ul:my-6 prose-ol:my-6">
-              {(() => {
-                const bodyContent = getLocalizedContent(article.body) || article.body || [];
-                // Ensure we have an array for PortableText
-                const content = Array.isArray(bodyContent) ? bodyContent : [];
-                
-                if (content.length === 0) {
-                  return (
-                    <div className="text-center py-8 text-muted-foreground">
-                      <p>Content not available.</p>
-                    </div>
-                  );
-                }
-                
+            {(() => {
+              const bodyContent = getLocalizedContent(article.body) || article.body || [];
+              const content = Array.isArray(bodyContent) ? bodyContent : [];
+              if (content.length === 0) {
                 return (
-                  <PortableText
-                    value={content}
-                    components={{
-                      types: {
-                        image: ({ value }) => (
-                          <div className="my-12">
-                            <img
-                              src={urlFor(value)?.quality(100).url() || "/DG Monogram Letters ONLY Digital Black.png"}
-                              alt={value.alt || ''}
-                              className="w-full h-auto object-contain rounded-lg shadow-lg border border-white/10"
-                              style={{ maxWidth: 'none', width: '100%', height: 'auto' }}
-                              onError={(e) => {
-                                const target = e.target as HTMLImageElement;
-                                target.src = "/DG Monogram Letters ONLY Digital Black.png";
-                              }}
-                            />
-                            {value.caption && (
-                              <p className="text-sm text-muted-foreground mt-4 text-center">
-                                {value.caption}
-                              </p>
-                            )}
-                          </div>
-                        ),
-                      },
-                    }}
-                  />
+                  <div className="text-center py-8 text-muted-foreground">
+                    <p>Content not available.</p>
+                  </div>
                 );
-              })()}
-            </div>
+              }
+              return <PortableText value={content} />;
+            })()}
 
             {/* Article Footer */}
             <footer className="mt-12 pt-6 border-t border-border/50">

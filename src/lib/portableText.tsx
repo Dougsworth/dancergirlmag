@@ -42,20 +42,37 @@ const components: PortableTextComponents = {
     image: ({ value }: PortableTextComponentProps<SanityImage>) => {
       if (!value?.asset?._ref) return null;
 
+      const alignment = (value as any).alignment || 'center';
+      const caption = (value as any).caption;
+      const isFloated = alignment === 'left' || alignment === 'right';
+
+      const floatStyle: React.CSSProperties = isFloated
+        ? {
+            float: alignment as 'left' | 'right',
+            width: '42%',
+            margin: alignment === 'left' ? '4px 24px 16px 0' : '4px 0 16px 24px',
+          }
+        : { clear: 'both', margin: '40px 0' };
+
       return (
-        <figure className="my-10">
-          <img
-            alt={value.alt || ' '}
-            loading="lazy"
-            className="rounded-lg max-w-full h-auto shadow-lg"
-            src={urlFor(value).width(800).url() || ''}
-          />
-          {value.alt && value.alt.trim() !== '' && (
-            <figcaption className="mt-3 text-sm text-center text-muted-foreground italic">
-              {value.alt}
-            </figcaption>
-          )}
-        </figure>
+        <>
+          <figure
+            className={isFloated ? 'not-prose' : 'not-prose my-10 clear-both'}
+            style={floatStyle}
+          >
+            <img
+              alt={value.alt || ' '}
+              loading="lazy"
+              className="rounded-lg w-full h-auto shadow-lg"
+              src={urlFor(value).width(isFloated ? 500 : 800).url() || ''}
+            />
+            {caption && (
+              <figcaption className="mt-2 text-sm text-center text-muted-foreground italic">
+                {caption}
+              </figcaption>
+            )}
+          </figure>
+        </>
       );
     },
   },
@@ -149,7 +166,7 @@ const components: PortableTextComponents = {
 
 export function PortableText({ value }: Props) {
   return (
-    <div className="prose prose-lg dark:prose-invert max-w-none font-body">
+    <div className="prose prose-lg dark:prose-invert max-w-none font-body overflow-hidden">
       <PortableTextReact value={value} components={components} />
     </div>
   );

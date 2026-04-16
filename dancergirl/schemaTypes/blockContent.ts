@@ -63,7 +63,22 @@ export default defineType({
           name: 'caption',
           type: 'string',
           title: 'Caption',
-          description: 'Optional caption below the image',
+          description: 'Optional caption displayed below the image',
+        },
+        {
+          name: 'alignment',
+          type: 'string',
+          title: 'Alignment',
+          description: 'Left/Right lets text wrap beside the image. Center sits full-width.',
+          initialValue: 'center',
+          options: {
+            list: [
+              { title: '⬅ Left — text wraps on the right', value: 'left' },
+              { title: '↔ Center — full width', value: 'center' },
+              { title: '➡ Right — text wraps on the left', value: 'right' },
+            ],
+            layout: 'radio',
+          },
         },
       ],
     }),
