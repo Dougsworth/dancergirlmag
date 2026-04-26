@@ -40,7 +40,7 @@ export default function Watch() {
           </p>
 
           <Button asChild size="lg" className="gap-2">
-            <a href="#" target="_blank" rel="noopener noreferrer">
+            <a href="https://www.youtube.com/@dancergirlmag" target="_blank" rel="noopener noreferrer">
               <ExternalLink className="w-4 h-4" />
               Visit our YouTube Channel
             </a>

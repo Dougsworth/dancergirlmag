@@ -40,16 +40,16 @@ const Footer = () => {
 
           {/* Social Icons */}
           <div className="flex space-x-5">
-            <a href="#" aria-label="Instagram" className="text-muted-foreground hover:text-primary transition-colors">
+            <a href="https://www.instagram.com/dancergirlmag/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="text-muted-foreground hover:text-primary transition-colors">
               <Instagram className="w-5 h-5" />
             </a>
-            <a href="#" aria-label="Facebook" className="text-muted-foreground hover:text-primary transition-colors">
+            <a href="https://www.facebook.com/profile.php?id=100095030267158" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="text-muted-foreground hover:text-primary transition-colors">
               <Facebook className="w-5 h-5" />
             </a>
-            <a href="#" aria-label="YouTube" className="text-muted-foreground hover:text-primary transition-colors">
+            <a href="https://www.youtube.com/@dancergirlmag" target="_blank" rel="noopener noreferrer" aria-label="YouTube" className="text-muted-foreground hover:text-primary transition-colors">
               <Youtube className="w-5 h-5" />
             </a>
-            <a href="#" aria-label="TikTok" className="text-muted-foreground hover:text-primary transition-colors">
+            <a href="https://www.tiktok.com/@dancergirlmag" target="_blank" rel="noopener noreferrer" aria-label="TikTok" className="text-muted-foreground hover:text-primary transition-colors">
               <TikTokIcon />
             </a>
           </div>
