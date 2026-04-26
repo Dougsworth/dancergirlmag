@@ -62,7 +62,7 @@ export default function DancersSpeakUpPanel() {
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {videos.map((video, i) => {
-              const thumb = video.thumbnail
+              const thumb = video.thumbnail?.asset
                 ? urlFor(video.thumbnail).width(600).height(400).url()
                 : getYouTubeThumbnail(video.videoUrl ?? "");
               const title = str(video.title);

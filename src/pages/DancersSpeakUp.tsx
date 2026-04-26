@@ -117,7 +117,7 @@ export default function DancersSpeakUp() {
               variants={containerVariants}
             >
               {videos.map((video) => {
-                const thumbnail = video.thumbnail
+                const thumbnail = video.thumbnail?.asset
                   ? urlFor(video.thumbnail).width(640).height(360).url()
                   : getYouTubeThumbnail(video.videoUrl);
                 const title = typeof video.title === "string" ? video.title : (video.title as any)?.en || "Video";
