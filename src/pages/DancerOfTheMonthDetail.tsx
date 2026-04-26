@@ -4,7 +4,7 @@ import { format } from "date-fns";
 import { getDancerOfTheMonthBySlug, type SanityDancerOfTheMonth } from "@/lib/sanity";
 import { PageLayout } from '@/components/PageLayout';
 import { ArrowLeft, Calendar, Eye, ExternalLink } from "lucide-react";
-import { PortableText } from '@portabletext/react';
+import { PortableText } from '@/lib/portableText';
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
