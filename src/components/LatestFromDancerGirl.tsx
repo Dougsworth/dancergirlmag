@@ -160,9 +160,8 @@ const LatestFromDancerGirl = () => {
     const fetchArticles = async () => {
       try {
         setLoading(true);
-        const excludeSections = ["choreographers-corner", "dancer-speak-up", "money-moves"];
-        const featuredData = await getArticles({ limit: 3, featured: true, excludeSections });
-        const recentData = await getArticles({ limit: 9, excludeSections });
+        const featuredData = await getArticles({ limit: 3, featured: true });
+        const recentData = await getArticles({ limit: 9 });
 
         const featuredIds = new Set(featuredData.map((a: any) => a._id));
         const combined = [

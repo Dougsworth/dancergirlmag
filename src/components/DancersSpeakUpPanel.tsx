@@ -60,7 +60,7 @@ export default function DancersSpeakUpPanel() {
             <p>Video content coming soon.</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div className="flex flex-wrap justify-center gap-5">
             {videos.map((video, i) => {
               const thumb = video.thumbnail?.asset
                 ? urlFor(video.thumbnail).width(600).height(400).url()
@@ -77,7 +77,7 @@ export default function DancersSpeakUpPanel() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: i * 0.08 }}
-                  className="group block rounded-xl overflow-hidden border border-border/50 bg-card hover:shadow-lg hover:border-primary/30 transition-all duration-300"
+                  className="group block rounded-xl overflow-hidden border border-border/50 bg-card hover:shadow-lg hover:border-primary/30 transition-all duration-300 w-full sm:w-[calc(50%-10px)] lg:w-[calc(25%-15px)]"
                 >
                   <div className="relative aspect-video overflow-hidden">
                     {thumb ? (
