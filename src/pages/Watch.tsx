@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { PageLayout } from "@/components/PageLayout";
-import { Play, ExternalLink } from "lucide-react";
+import { ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export default function Watch() {
@@ -13,18 +13,6 @@ export default function Watch() {
           transition={{ duration: 0.6 }}
           className="container mx-auto px-4 text-center max-w-2xl"
         >
-          {/* Icon */}
-          <motion.div
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ delay: 0.2, type: "spring" }}
-            className="mb-8"
-          >
-            <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto">
-              <Play className="w-10 h-10 text-primary ml-1" />
-            </div>
-          </motion.div>
-
           {/* Title */}
           <h1 className="text-4xl md:text-5xl font-secondary font-bold text-foreground mb-4">
             Coming Soon

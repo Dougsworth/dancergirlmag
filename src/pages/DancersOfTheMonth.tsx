@@ -143,30 +143,7 @@ const DancersOfTheMonth = () => {
           </div>
         </motion.section>
         
-        {/* Dancers: Speak Up Banner */}
-        <div className="container mx-auto px-4 mb-10">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="flex flex-col sm:flex-row items-center justify-between gap-4 bg-primary/10 border border-primary/20 rounded-2xl px-6 py-5"
-          >
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0">
-                <Play className="w-5 h-5 text-primary ml-0.5" />
-              </div>
-              <p className="text-foreground font-medium">
-                Watch our featured dancers in action →{" "}
-                <span className="text-primary">Dancers: Speak Up!</span>
-              </p>
-            </div>
-            <Link to="/dancers-speak-up">
-              <Button variant="default" size="sm" className="rounded-full whitespace-nowrap">
-                Watch Now
-              </Button>
-            </Link>
-          </motion.div>
-        </div>
+        
 
         {/* Dancers Grid */}
         <div className="container mx-auto px-4 pb-20">

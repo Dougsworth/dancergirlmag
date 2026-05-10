@@ -2,6 +2,7 @@ import HeroSection from "@/components/HeroSection";
 import DancersSpeakUpPanel from "@/components/DancersSpeakUpPanel";
 import { VideoFirstLayout } from "@/components/VideoFirstLayout";
 import LatestFromDancerGirl from "@/components/LatestFromDancerGirl";
+import FeaturedArticlesCarousel from "@/components/FeaturedArticlesCarousel";
 import AdSpace from "@/components/AdSpace";
 import HomepageMagazine from "@/components/HomepageMagazine";
 
@@ -28,6 +29,9 @@ const Index = () => {
 
       {/* Magazine panels: Editor Letter / DOM / Events / Music */}
       <HomepageMagazine />
+
+      {/* Featured Articles carousel */}
+      <FeaturedArticlesCarousel />
 
       {/* Dancers: Speak Up! */}
       <DancersSpeakUpPanel />

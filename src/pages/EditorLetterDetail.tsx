@@ -139,20 +139,6 @@ const EditorLetterDetail = () => {
 
         {/* Letter Header */}
         <header className="mb-8">
-          {/* Full-width founder image */}
-          {founder?.image && (
-            <div className="w-full h-[40vh] md:h-[50vh] rounded-xl overflow-hidden shadow-lg mb-8">
-              <SanityImage
-                image={founder.image}
-                alt="Founder"
-                width={900}
-                height={500}
-                className="w-full h-full object-cover object-top"
-                fallbackClassName="w-full h-full object-contain p-4"
-              />
-            </div>
-          )}
-
           {letter.featured && (
             <div className="mb-4">
               <Badge className="bg-gradient-to-r from-primary to-primary/80 text-primary-foreground shadow-lg">
@@ -201,6 +187,20 @@ const EditorLetterDetail = () => {
               <p className="text-lg text-muted-foreground italic leading-relaxed relative z-10">
                 "{getLocalizedContent(letter.excerpt) || letter.excerpt}"
               </p>
+            </div>
+          )}
+
+          {/* Full-width founder image */}
+          {founder?.image && (
+            <div className="w-full h-[40vh] md:h-[50vh] rounded-xl overflow-hidden shadow-lg mb-8">
+              <SanityImage
+                image={founder.image}
+                alt="Founder"
+                width={900}
+                height={500}
+                className="w-full h-full object-cover object-top"
+                fallbackClassName="w-full h-full object-contain p-4"
+              />
             </div>
           )}
         </header>

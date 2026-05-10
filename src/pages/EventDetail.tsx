@@ -66,7 +66,16 @@ export default function EventDetail() {
 
         <div className="max-w-4xl mx-auto">
           <h1 className="text-3xl font-bold mb-6">{event.title}</h1>
-          
+
+          {event.description && event.description.length > 0 && (
+            <div className="mb-6">
+              <h3 className="text-lg font-semibold mb-3">About This Event</h3>
+              <div className="prose max-w-none">
+                <PortableText value={event.description} />
+              </div>
+            </div>
+          )}
+
           {event.featuredImage && urlFor(event.featuredImage) && (
             <div className="relative w-full mb-6 rounded-lg overflow-hidden bg-gray-100">
               <img
@@ -121,14 +130,6 @@ export default function EventDetail() {
                   )}
                 </div>
 
-                {event.description && event.description.length > 0 && (
-                  <div className="mt-8">
-                    <h3 className="text-lg font-semibold mb-3">About This Event</h3>
-                    <div className="prose max-w-none">
-                      <PortableText value={event.description} />
-                    </div>
-                  </div>
-                )}
               </div>
             </div>
 

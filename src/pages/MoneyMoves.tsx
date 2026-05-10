@@ -57,9 +57,6 @@ export default function MoneyMoves() {
           </div>
           <div className="container mx-auto px-4 relative z-10">
             <div className="text-center mb-12">
-              <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                <DollarSign className="w-8 h-8 text-primary" />
-              </div>
               <h1 className="text-3xl md:text-4xl lg:text-5xl font-secondary font-bold text-foreground mb-4">
                 Money Moves
               </h1>

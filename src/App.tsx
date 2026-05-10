@@ -9,7 +9,7 @@ import LoadingSpinner from "@/components/LoadingSpinner";
 // Lazy load all pages - only download code when the route is visited
 const Home = lazy(() => import("@/pages/Index"));
 const About = lazy(() => import("@/pages/About"));
-const Features = lazy(() => import("@/pages/Features"));
+const FeaturedArticles = lazy(() => import("@/pages/FeaturedArticles"));
 const Stories = lazy(() => import("@/pages/Stories"));
 const StoryDetail = lazy(() => import("@/pages/StoryDetail"));
 const ChoreographersCorner = lazy(() => import("@/pages/ChoreographersCorner"));
@@ -21,7 +21,6 @@ const EditorLetters = lazy(() => import("@/pages/EditorLetters"));
 const EditorLetterDetail = lazy(() => import("@/pages/EditorLetterDetail"));
 const DancersOfTheMonth = lazy(() => import("@/pages/DancersOfTheMonth"));
 const DancerOfTheMonthDetail = lazy(() => import("@/pages/DancerOfTheMonthDetail"));
-const DancerSpeakUp = lazy(() => import("@/pages/DancerSpeakUp"));
 const DancersSpeakUp = lazy(() => import("@/pages/DancersSpeakUp"));
 const MoneyMoves = lazy(() => import("@/pages/MoneyMoves"));
 const Watch = lazy(() => import("@/pages/Watch"));
@@ -49,7 +48,8 @@ function App() {
                 <Routes>
                   <Route path="/" element={<Home />} />
                   <Route path="/about" element={<About />} />
-                  <Route path="/features" element={<Features />} />
+                  <Route path="/articles" element={<FeaturedArticles />} />
+                  <Route path="/features" element={<FeaturedArticles />} />
                   <Route path="/stories" element={<Stories />} />
                   <Route path="/stories/:slug" element={<StoryDetail />} />
                   <Route path="/article/:slug" element={<StoryDetail />} />
@@ -64,7 +64,6 @@ function App() {
                   <Route path="/events/:slug" element={<EventDetail />} />
                   <Route path="/dancers-of-the-month" element={<DancersOfTheMonth />} />
                   <Route path="/dancers-of-the-month/:slug" element={<DancerOfTheMonthDetail />} />
-                  <Route path="/dancer-speak-up" element={<DancerSpeakUp />} />
                   <Route path="/dancers-speak-up" element={<DancersSpeakUp />} />
                   <Route path="/money-moves" element={<MoneyMoves />} />
                   <Route path="/watch" element={<Watch />} />

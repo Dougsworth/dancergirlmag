@@ -175,28 +175,28 @@ export default function StoryDetail() {
               </div>
             </header>
 
-            {/* Featured Image - Clean and minimal */}
-            {article.mainImage && (
-              <div className="mb-8">
-                <img
-                  src={urlFor(article.mainImage)?.quality(100).url() || "/DG Monogram Letters ONLY Digital Black.png"}
-                  alt={getLocalizedContent(article.title) || article.title}
-                  className="w-full h-auto object-contain rounded-lg shadow-lg border border-white/10"
-                  style={{ maxWidth: 'none', width: '100%', height: 'auto' }}
-                  onError={(e) => {
-                    const target = e.target as HTMLImageElement;
-                    target.src = "/DG Monogram Letters ONLY Digital Black.png";
-                  }}
-                />
-              </div>
-            )}
-
             {/* Article Excerpt */}
             {article.excerpt && (
               <div className="mb-8">
                 <p className="text-xl text-muted-foreground leading-relaxed">
                   {getLocalizedContent(article.excerpt) || article.excerpt}
                 </p>
+              </div>
+            )}
+
+            {/* Featured Image - Clean and minimal */}
+            {article.mainImage && (
+              <div className="mb-8 flex justify-center">
+                <img
+                  src={urlFor(article.mainImage)?.quality(100).url() || "/DG Monogram Letters ONLY Digital Black.png"}
+                  alt={getLocalizedContent(article.title) || article.title}
+                  className="h-auto object-contain rounded-lg shadow-lg border border-white/10"
+                  style={{ maxHeight: '70vh', maxWidth: '100%', width: 'auto' }}
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    target.src = "/DG Monogram Letters ONLY Digital Black.png";
+                  }}
+                />
               </div>
             )}
 

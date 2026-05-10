@@ -18,6 +18,8 @@ export async function getDancersOfMonth(params?: {
   
   const filters = [
     '_type == "dancerOfTheMonth"',
+    '!(_id in path("drafts.**"))',
+    'isActive == true',
     ...(featured ? ['isFeatured == true'] : []),
     ...(year ? [`year == ${year}`] : []),
   ];
@@ -97,7 +99,7 @@ export async function getCurrentDancerOfMonth(): Promise<SanityDancerOfTheMonth 
   const currentYear = now.getFullYear();
   const currentMonth = now.toLocaleString('default', { month: 'long' });
 
-  const query = `*[_type == "dancerOfTheMonth" && year == ${currentYear} && month == "${currentMonth}"][0] {
+  const query = `*[_type == "dancerOfTheMonth" && !(_id in path("drafts.**")) && isActive == true && year == ${currentYear} && month == "${currentMonth}"][0] {
     _id,
     _type,
     dancerName,

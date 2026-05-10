@@ -11,7 +11,7 @@ import type { SanityArticle, ArticleQueryParams } from '../types';
  * Get all articles with filtering and pagination
  */
 export async function getArticles(params?: ArticleQueryParams): Promise<SanityArticle[]> {
-  const { limit = 12, section, featured, excludeSections } = params || {};
+  const { limit = 12, section, featured, featuredInCarousel, excludeSections } = params || {};
 
   // Build query filters
   let filters = [
@@ -21,6 +21,10 @@ export async function getArticles(params?: ArticleQueryParams): Promise<SanityAr
 
   if (featured !== undefined) {
     filters.push('featured == $featured');
+  }
+
+  if (featuredInCarousel !== undefined) {
+    filters.push('featuredInCarousel == $featuredInCarousel');
   }
 
   if (section) {
@@ -44,13 +48,15 @@ export async function getArticles(params?: ArticleQueryParams): Promise<SanityAr
     section,
     body,
     author,
-    featured
+    featured,
+    featuredInCarousel
   }`;
 
   // Build query parameters
   const queryParams: Record<string, any> = { limit };
 
   if (featured !== undefined) queryParams.featured = featured;
+  if (featuredInCarousel !== undefined) queryParams.featuredInCarousel = featuredInCarousel;
   if (section) queryParams.section = section;
 
   if (excludeSections && excludeSections.length > 0) {
@@ -127,4 +133,12 @@ export async function getArticlesBySection(
  */
 export async function getRecentArticles(limit: number = 5): Promise<SanityArticle[]> {
   return getArticles({ limit });
+}
+
+/**
+ * Get articles selected for the Featured Articles homepage carousel
+ * (General section articles with featuredInCarousel = true)
+ */
+export async function getCarouselFeaturedArticles(limit: number = 10): Promise<SanityArticle[]> {
+  return getArticles({ limit, section: 'general', featuredInCarousel: true });
 }

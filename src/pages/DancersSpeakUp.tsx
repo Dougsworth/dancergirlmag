@@ -71,9 +71,6 @@ export default function DancersSpeakUp() {
             <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-accent/5 rounded-full blur-3xl" />
           </div>
           <div className="container mx-auto px-4 relative z-10 text-center">
-            <div className="w-16 h-16 bg-accent/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
-              <Play className="w-8 h-8 text-accent ml-1" />
-            </div>
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-secondary font-bold text-foreground mb-4">
               Dancer: Speak Up!
             </h1>

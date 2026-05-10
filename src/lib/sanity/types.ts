@@ -62,6 +62,7 @@ export interface SanityArticle {
   section?: string;
   author?: string;
   featured?: boolean;
+  featuredInCarousel?: boolean;
   readTime?: number;
 }
 
@@ -183,6 +184,7 @@ export interface ArticleQueryParams {
   limit?: number;
   section?: string;
   featured?: boolean;
+  featuredInCarousel?: boolean;
   excludeSections?: string[];
 }
 

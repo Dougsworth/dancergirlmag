@@ -30,8 +30,7 @@ const HeroSection = () => {
   const captionLink = hero?.captionLinkResolved
     || hero?.captionLinkUrl
     || (dom?.slug?.current ? `/dancers-of-the-month/${dom.slug.current}` : "");
-  const captionButton = hero?.captionButtonText
-    || (captionName ? `Meet ${captionName.split(" ")[0]}` : "");
+  const captionButton = hero?.captionButtonText || captionName;
 
   // Use D.O.M featured image as background if no video is configured
   const heroImageUrl = dom?.featuredImage
@@ -102,24 +101,14 @@ const HeroSection = () => {
         transition={{ delay: 1, duration: 0.8 }}
       >
         <div className="container mx-auto max-w-4xl">
-          {captionName ? (
+          {captionName && captionLink ? (
             <div className="flex items-end justify-between">
-              <div className="bg-black/50 backdrop-blur-sm rounded-2xl p-4 sm:p-5 border border-white/10 max-w-xs">
-                <div className="text-xs uppercase tracking-widest text-primary font-semibold mb-1">
-                  {captionHeading}
-                </div>
-                <h2 className="text-xl sm:text-2xl font-bold text-white mb-3 drop-shadow-lg">
-                  {captionName}
-                </h2>
-                {captionLink && (
-                  <Link
-                    to={captionLink}
-                    className="inline-flex items-center gap-2 bg-primary text-white text-sm font-medium px-4 py-2 rounded-full hover:bg-primary/90 transition-colors"
-                  >
-                    {captionButton}
-                  </Link>
-                )}
-              </div>
+              <Link
+                to={captionLink}
+                className="inline-flex items-center gap-3 bg-primary text-white text-base font-semibold px-8 py-4 rounded-full hover:bg-primary/90 hover:scale-105 transition-all duration-300 shadow-lg shadow-primary/30 tracking-wide"
+              >
+                {captionButton}
+              </Link>
             </div>
           ) : (
             <div className="flex items-center justify-center">

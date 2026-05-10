@@ -46,11 +46,12 @@ const NavigationWithDropdowns = () => {
     },
     {
       name: "Features",
-      path: "/features",
+      path: "/articles",
       hasDropdown: true,
       subItems: [
-        { name: "D.O.M Archive", path: "/dancers-of-the-month" },
+        { name: "Featured Articles", path: "/articles" },
         { name: "Dancers: Speak Up!", path: "/dancers-speak-up" },
+        { name: "D.O.M Archive", path: "/dancers-of-the-month" },
       ]
     },
     {

@@ -77,7 +77,7 @@ export default function DancersSpeakUpPanel() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: i * 0.08 }}
-                  className="group block rounded-xl overflow-hidden border border-border/50 bg-card hover:shadow-lg hover:border-primary/30 transition-all duration-300 w-full sm:w-[calc(50%-10px)] lg:w-[calc(25%-15px)]"
+                  className="group block rounded-xl overflow-hidden border border-border/50 bg-card hover:shadow-lg hover:border-primary/30 transition-all duration-300 w-full sm:w-[calc(50%-10px)] lg:w-[calc(33.333%-14px)]"
                 >
                   <div className="relative aspect-video overflow-hidden">
                     {thumb ? (
@@ -99,12 +99,12 @@ export default function DancersSpeakUpPanel() {
                       </div>
                     </div>
                   </div>
-                  <div className="p-4">
-                    <h3 className="font-semibold text-foreground text-sm leading-snug line-clamp-2 group-hover:text-primary transition-colors mb-1">
+                  <div className="p-5">
+                    <h3 className="font-semibold text-foreground text-sm leading-snug line-clamp-3 group-hover:text-primary transition-colors mb-2">
                       {title}
                     </h3>
                     {desc && (
-                      <p className="text-xs text-muted-foreground line-clamp-2">{desc}</p>
+                      <p className="text-xs text-muted-foreground line-clamp-4">{desc}</p>
                     )}
                   </div>
                 </motion.a>
