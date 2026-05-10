@@ -178,7 +178,7 @@ export default function StoryDetail() {
             {/* Article Excerpt */}
             {article.excerpt && (
               <div className="mb-8">
-                <p className="text-xl text-muted-foreground leading-relaxed">
+                <p className="text-xl text-muted-foreground leading-relaxed italic">
                   {getLocalizedContent(article.excerpt) || article.excerpt}
                 </p>
               </div>

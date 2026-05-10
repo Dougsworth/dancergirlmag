@@ -118,7 +118,7 @@ export default function DancerOfTheMonthDetail() {
                 {dancer.dancerName || 'Unknown Dancer'}
               </h1>
               
-              <p className="text-xl text-muted-foreground max-w-2xl mx-auto font-body leading-relaxed">
+              <p className="text-xl text-muted-foreground max-w-2xl mx-auto font-body leading-relaxed italic">
                 {typeof dancer.excerpt === 'string' ? dancer.excerpt : (dancer.excerpt as any)?.en || ''}
               </p>
 
