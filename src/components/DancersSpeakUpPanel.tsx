@@ -43,7 +43,7 @@ export default function DancersSpeakUpPanel() {
               Voices from the Floor
             </p>
             <h2 className="font-primary text-3xl md:text-4xl leading-tight text-foreground">
-              Dancers: Speak Up!
+              Dancer: Speak Up!
             </h2>
           </div>
           <Link

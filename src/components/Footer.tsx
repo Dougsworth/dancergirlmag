@@ -63,7 +63,7 @@ const Footer = () => {
               {t('nav.events')}
             </Link>
             <Link to="/dancers-speak-up" className="text-muted-foreground hover:text-foreground transition-colors">
-              Dancers: Speak Up!
+              Dancer: Speak Up!
             </Link>
             <Link to="/about" className="text-muted-foreground hover:text-foreground transition-colors">
               {t('nav.about')}

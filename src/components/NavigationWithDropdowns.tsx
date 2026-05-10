@@ -50,7 +50,7 @@ const NavigationWithDropdowns = () => {
       hasDropdown: true,
       subItems: [
         { name: "Featured Articles", path: "/articles" },
-        { name: "Dancers: Speak Up!", path: "/dancers-speak-up" },
+        { name: "Dancer: Speak Up!", path: "/dancers-speak-up" },
         { name: "D.O.M Archive", path: "/dancers-of-the-month" },
       ]
     },
@@ -148,7 +148,7 @@ const NavigationWithDropdowns = () => {
                 )
               }
             >
-              Events
+              Calendar
             </NavLink>
           </nav>
 

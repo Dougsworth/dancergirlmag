@@ -94,7 +94,7 @@ export default defineType({
         list: [
           { title: 'Money Moves', value: 'money-moves' },
           { title: 'Choreographers Corner', value: 'choreographers-corner' },
-          { title: 'Dancers: Speak Up', value: 'dancer-speak-up' },
+          { title: 'Dancer: Speak Up', value: 'dancer-speak-up' },
           { title: 'Featured Articles', value: 'general' },
         ],
         layout: 'radio',
